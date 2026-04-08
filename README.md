@@ -44,42 +44,6 @@ A multi-role restaurant management and ordering platform with separate applicati
  
 ---
  
-## 🚀 Features
- 
-### 🟢 Customer App
-- **Attract Screen**: Rotating slideshow with "Touch Here to Order" and "Send a Complaint" buttons
-- **Order Flow**: Welcome → Order Type → Browse Menu → Search/Filter → Item Details → Customization → Cart → Checkout → Payment → Confirmation → Rating
-- **Menu Categories**: Navigate by category with always-visible cart sidebar
-- **Search**: Supports item name, partial text, and misspellings
-- **Filters**: Sort by price (lowest/highest), popularity, top rated, available now
-- **Item Customization**: Quantity selection with modifier checkboxes (extra cheese, beverages, etc.)
-- **Cart Management**: View items, modify quantities, delete items
-- **Payment Options**: Card (Stripe) or Cash at Counter
-- **Order Confirmation**: Display order number and option to rate service
-- **Ratings & Reviews**: Star rating with comment, linked to order number
-- **Complaint System**: Direct communication with admin including user name and phone number
-- **Idle Timeout**: 45 seconds of inactivity triggers "Are you still there?" popup with 15-second countdown; clears cart if no response
- 
-### 🟠 Kitchen Staff App
-- **Live Orders**: Display new orders instantly with order number, item list, modifiers, and notes
-- **Order Status**: Button to change order status to "Done"
-- **Completed Orders**: View completed orders and undo if accidentally marked
-- **Kitchen Communication**: Chat with admin for ingredient unavailability or replacements
-- **Design**: Large buttons (minimum 48px × 48px), high-contrast colors for visibility
- 
-### 🔵 Admin App
-- **Dashboard**: Charts showing order count, canceled orders, pending/late orders, revenue
-- **Order Management**: View all orders, filter by status/date/payment method
-- **Menu Management**: Create, read, update, delete categories, products, prices, modifiers
-- **Complaint Management**: View and resolve customer complaints
-- **Reviews Management**: Monitor customer ratings and reviews
-- **Staff Management**: View kitchen staff list and details
-- **Internal Messaging**: Chat with kitchen staff
-- **Analytics & Reports**: Sales by day/month, best/worst selling items, cancel rate
-- **Promotional Offers**: Create/update/delete offers with date ranges and discounts
-
- ---
- 
 ## 🎨 UI/UX Requirements
  
 - All buttons and photos: **Minimum 48px × 48px**
