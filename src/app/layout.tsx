@@ -1,40 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-type Category = {
-	id: string;
-	value: string;
-};
-const categories: Category[] = [
-	{
-		id: "1",
-		value: "Pizza",
-	},
-	{
-		id: "2",
-		value: "Burger",
-	},
-	{
-		id: "3",
-		value: "Pasta",
-	},
-	{
-		id: "4",
-		value: "Salads",
-	},
-	{
-		id: "5",
-		value: "Drinks",
-	},
-	{
-		id: "6",
-		value: "Deserts",
-	},
-];
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -68,19 +35,7 @@ export default function RootLayout({
 			)}
 			lang="en"
 		>
-			<body>
-				<nav className="p-5 m-3 border-black border-2">
-					{categories.map((category) => (
-						<Link
-							href={`/categories?categoryId=${category.id}`}
-							key={category.id}
-						>
-							<Button variant="link">{category.value}</Button>
-						</Link>
-					))}
-				</nav>
-				{children}
-			</body>
+			<body>{children}</body>
 		</html>
 	);
 }

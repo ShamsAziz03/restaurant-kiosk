@@ -1,12 +1,19 @@
-type Recipe = {
-	id: string;
+import { ShoppingCart } from "lucide-react";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+export type FoodItem = {
+	id: number;
+	categoryId: number;
 	title: string;
 	image: string;
-	time: number;
+	rating: number;
 	description: string;
-	vegan: boolean;
+	details: string;
+	price: number;
 };
 
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -16,12 +23,10 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 
-async function getRecipes(categoryId: string): Promise<Recipe[]> {
-	console.log(categoryId);
-	const url = categoryId
-		? `http://localhost:4000/recipes?categoryId=${categoryId}`
-		: `http://localhost:4000/recipes`;
-	const response = await fetch(url, { cache: "no-store" });
+async function getFood(categoryId: string): Promise<FoodItem[]> {
+	const response = await fetch(
+		`http://localhost:4000/foodItems?categoryId=${categoryId}`,
+	);
 	const result = await response.json();
 	return result;
 }
@@ -33,28 +38,49 @@ export default async function Categories({
 }) {
 	const { categoryId } = await searchParams;
 
-	const recipes = await getRecipes(categoryId || "1");
+	const foodItems = await getFood(categoryId || "1");
 
 	return (
 		<main>
-			<div className="grid grid-cols-3 gap-8 p-10 m-5 border-black border-2">
-				{recipes.length > 0 &&
-					recipes?.map((recipe) => (
-						<Card key={recipe.id}>
-							<CardHeader>
-								<CardTitle>{recipe.title}</CardTitle>
-								<CardDescription>{recipe.description}</CardDescription>
+			<div className="grid grid-cols-3 gap-8 p-10 m-5">
+				{foodItems.length > 0 &&
+					foodItems?.map((item) => (
+						<Card
+							className="relative top-0 transition-[top] duration-[350ms] ease-in-out hover:-top-[10px]"
+							key={item.id}
+						>
+							<CardHeader className="flex flex-col gap-3 justify-center items-center">
+								<Avatar className="w-[150px] h-[150px] border-2 border-gray-100 bg-slate-100 flex justify-center items-center">
+									<AvatarImage alt={item.description} src={item.image} />
+									<AvatarFallback>
+										{item.description.toUpperCase()}
+									</AvatarFallback>
+								</Avatar>
+								<CardTitle className="text-2xl">{item.title}</CardTitle>
+								<CardDescription className="text-sm">
+									{item.description}
+								</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<p>{recipe.description}</p>
+								<p className="font-bold text-green-400 text-2xl mb-2">
+									{item.price} $
+								</p>
 							</CardContent>
-							<CardFooter className="flex justify-between">
-								<button type="button">View Recipe</button>
-								{recipe.vegan && <p>Vegan!</p>}
+							<CardFooter className="flex justify-center items-center gap-3">
+								<Link
+									className="text-center text-xl font-semibold text-white bg-gray-800 rounded-[10px] shadow-xl w-[100%] p-1 hover:bg-gray-400 border-2 hover:shadow-2xl hover:text-black"
+									href={`/items?itemId=${item.id}`}
+								>
+									<button type="button">View Details</button>
+								</Link>
+
+								<Button className="border-2 border-black rounded-lg">
+									<ShoppingCart />
+								</Button>
 							</CardFooter>
 						</Card>
 					))}
-				{recipes.length === 0 && <p>No Items to Show</p>}
+				{foodItems.length === 0 && <p>No Items to Show</p>}
 			</div>
 		</main>
 	);
