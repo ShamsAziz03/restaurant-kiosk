@@ -42,7 +42,7 @@ export default async function Categories({
 
 	return (
 		<main>
-			<div className="grid grid-cols-3 gap-8 p-10 m-5">
+			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-10 m-5 justify-items-center">
 				{foodItems.length > 0 &&
 					foodItems?.map((item) => (
 						<Card
@@ -50,7 +50,7 @@ export default async function Categories({
 							key={item.id}
 						>
 							<CardHeader className="flex flex-col gap-3 justify-center items-center">
-								<Avatar className="w-[150px] h-[150px] border-2 border-gray-100 bg-slate-100 flex justify-center items-center">
+								<Avatar className="w-[80%] h-[80%] border-2 border-gray-100 bg-slate-100 flex justify-center items-center">
 									<AvatarImage alt={item.description} src={item.image} />
 									<AvatarFallback>
 										{item.description.toUpperCase()}
@@ -80,7 +80,9 @@ export default async function Categories({
 							</CardFooter>
 						</Card>
 					))}
-				{foodItems.length === 0 && <p>No Items to Show</p>}
+				{foodItems.length === 0 && (
+					<h1 className="text-center font-bold">No Items to Show!</h1>
+				)}
 			</div>
 		</main>
 	);
