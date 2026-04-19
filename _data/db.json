@@ -1,85 +1,124 @@
 {
-	"recipes": [
+	"foodItems": [
 		{
-			"id": "1",
+			"id": 1,
 			"categoryId": 1,
-			"title": "Veggie Carbonara",
-			"image": "veggie_carbonara.jpg",
-			"time": 20,
-			"description": "A vegetarian twist on the classic Italian pasta dish with eggs, cheese, and vegetarian bacon.",
-			"vegan": false
+			"title": "Margherita Pizza",
+			"image": "https://plus.unsplash.com/premium_photo-1733259709671-9dbf22bf02cc?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"description": "Classic pizza with tomato sauce, fresh mozzarella, and basil.",
+			"details": "Made with hand-stretched dough, San Marzano tomatoes, fresh buffalo mozzarella, extra virgin olive oil, and organic basil leaves.",
+			"rating": 4,
+			"price": 12.99
 		},
 		{
-			"id": "2",
+			"id": 2,
 			"categoryId": 2,
-			"title": "Veg Stir-Fry",
-			"image": "veg_stir_fry.jpg",
-			"time": 25,
-			"description": "A quick and healthy vegetarian stir-fry with fresh vegetables and tofu.",
-			"vegan": true
+			"title": "Classic Beef Burger",
+			"image": "https://media.istockphoto.com/id/115042687/photo/hamburger-over-white-background.webp?s=1024x1024&w=is&k=20&c=zregkh8UX5_XQd-ckkUAEvOQPzFal8BsjF2yEgI9O04=",
+			"rating": 3.5,
+			"description": "Juicy beef patty with lettuce, tomato, and our secret sauce.",
+			"details": "A 200g prime beef patty grilled to perfection, served on a toasted brioche bun with cheddar cheese, pickles, and our signature house sauce.",
+			"price": 10.5
 		},
 		{
-			"id": "3",
-			"categoryId": 1,
-			"title": "Veg Alfredo",
-			"image": "veg_alfredo.jpg",
-			"time": 30,
-			"description": "Creamy pasta with grilled vegetarian chicken and a rich Alfredo sauce.",
-			"vegan": false
-		},
-		{
-			"id": "4",
-			"categoryId": 5,
-			"title": "Mushroom Risotto",
-			"image": "mushroom_risotto.jpg",
-			"time": 40,
-			"description": "A comforting vegetarian Italian rice dish with sautéed mushrooms and parmesan cheese.",
-			"vegan": false
-		},
-		{
-			"id": "5",
+			"id": 3,
 			"categoryId": 3,
-			"title": "Veg Lentil Soup",
-			"image": "veg_lentil_soup.jpg",
-			"time": 35,
-			"description": "A hearty and nutritious vegetarian soup made with lentils and a blend of spices.",
-			"vegan": true
+			"title": "Penne Arrabbiata",
+			"image": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"rating": 2.5,
+			"description": "Spicy pasta with garlic, tomatoes, and dried red chili peppers.",
+			"details": "Al dente penne pasta tossed in a fiery tomato sauce made with fresh garlic, chili flakes, and parsley. Finished with a drizzle of spicy olive oil.",
+			"price": 14.0
 		},
 		{
-			"id": "6",
-			"categoryId": 2,
-			"title": "Grilled Mushrooms",
-			"image": "grilled_mushrooms.jpg",
-			"time": 15,
-			"description": "Flavorful grilled Portobello mushrooms with a lemon and herb marinade.",
-			"vegan": true
-		},
-		{
-			"id": "7",
-			"categoryId": 3,
-			"title": "Roasted Veg Salad",
-			"image": "roasted_veg_salad.jpg",
-			"time": 30,
-			"description": "A colorful vegetarian salad featuring roasted vegetables and a balsamic vinaigrette.",
-			"vegan": true
-		},
-		{
-			"id": "8",
-			"categoryId": 6,
-			"title": "Veggie Tacos",
-			"image": "veggie_tacos.jpg",
-			"time": 25,
-			"description": "Tasty vegetarian tacos with seasoned plant-based meat and fresh toppings.",
-			"vegan": true
-		},
-		{
-			"id": "9",
+			"id": 4,
 			"categoryId": 4,
-			"title": "Chocolate Cookies",
-			"image": "chocolate_cookies.jpg",
-			"time": 12,
-			"description": "Homemade vegetarian chocolate chip cookies that are soft and gooey inside.",
-			"vegan": false
+			"title": "Greek Salad",
+			"image": "https://images.unsplash.com/photo-1607532941433-304659e8198a?q=80&w=1078&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"rating": 4,
+			"description": "Fresh cucumbers, tomatoes, olives, and feta cheese with olive oil.",
+			"details": "Crisp cucumbers, vine-ripened tomatoes, red onions, Kalamata olives, and a thick slice of premium feta cheese, seasoned with dried oregano.",
+			"price": 8.5
+		},
+		{
+			"id": 5,
+			"categoryId": 5,
+			"title": "Iced Berry Lemonade",
+			"image": "https://plus.unsplash.com/premium_photo-1669807973705-af8d158d5021?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"rating": 5,
+			"description": "Refreshing cold drink with fresh berries and lemon slices.",
+			"details": "Hand-squeezed lemon juice mixed with muddled raspberries and blueberries, served over crushed ice with a hint of mint.",
+			"price": 4.5
+		},
+		{
+			"id": 6,
+			"categoryId": 6,
+			"title": "Chocolate Glazed Donut",
+			"image": "https://images.unsplash.com/photo-1562945431-ce2b63d5a7fe?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"rating": 5,
+			"description": "Soft donut dipped in rich Belgian chocolate ganache.",
+			"details": "Freshly baked yeast donut, glazed with a smooth 70% cocoa Belgian chocolate and sprinkled with dark chocolate shavings.",
+			"price": 3.99
+		},
+		{
+			"id": 7,
+			"categoryId": 1,
+			"title": "Pepperoni Feast",
+			"image": "https://images.unsplash.com/photo-1692737580547-b45bb4a02356?q=80&w=915&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"rating": 3.5,
+			"description": "Loaded with pepperoni and extra mozzarella cheese.",
+			"details": "Our classic crust topped with double portions of spicy pepperoni slices and a blend of mozzarella and provolone cheese.",
+			"price": 15.99
+		},
+		{
+			"id": 8,
+			"categoryId": 2,
+			"title": "Veggie Garden Burger",
+			"image": "https://images.unsplash.com/photo-1546441471-c81f0586d0a9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8R2FyZGVuJTIwQnVyZ2VyfGVufDB8fDB8fHww",
+			"rating": 2.4,
+			"description": "Plant-based patty with avocado and sprouts.",
+			"details": "A homemade patty made from black beans, quinoa, and roasted vegetables, topped with smashed avocado and organic alfalfa sprouts.",
+			"price": 11.0
+		},
+		{
+			"id": 9,
+			"categoryId": 3,
+			"title": "Creamy Fettuccine",
+			"image": "https://images.unsplash.com/photo-1570549986390-6bd150ac3515?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Q3JlYW15JTIwRmV0dHVjY2luZXxlbnwwfHwwfHx8MA%3D%3D",
+			"rating": 5,
+			"description": "Rich white sauce pasta with mushrooms and parmesan.",
+			"details": "Broad fettuccine noodles coated in a velvety sauce made from heavy cream, butter, garlic, and freshly grated parmesan cheese.",
+			"price": 16.5
+		},
+		{
+			"id": 10,
+			"categoryId": 1,
+			"title": "BBQ Chicken Pizza",
+			"image": "https://plus.unsplash.com/premium_photo-1664472696633-4b0b41e95202?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8QkJRJTIwQ2hpY2tlbiUyMFBpenphfGVufDB8fDB8fHww",
+			"rating": 4.5,
+			"description": "Grilled chicken, red onions, and cilantro on tangy BBQ sauce.",
+			"details": "Topped with smoky BBQ sauce, tender grilled chicken breast pieces, thinly sliced red onions, and fresh cilantro over a blend of mozzarella and smoked gouda.",
+			"price": 16.5
+		},
+		{
+			"id": 11,
+			"categoryId": 1,
+			"title": "Truffle Mushroom Pizza",
+			"image": "https://images.unsplash.com/photo-1604917877934-07d8d248d396?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"rating": 4.8,
+			"description": "White pizza with wild mushrooms and aromatic truffle oil.",
+			"details": "A sophisticated blend of cremini, shiitake, and oyster mushrooms on a garlic cream base, finished with a drizzle of premium white truffle oil and fresh parsley.",
+			"price": 18.99
+		},
+		{
+			"id": 12,
+			"categoryId": 1,
+			"title": "Quattro Formaggi",
+			"image": "https://images.unsplash.com/photo-1655662844300-e59c3d2e7587?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"rating": 4.2,
+			"description": "Rich blend of four premium Italian cheeses.",
+			"details": "A cheese lover's dream featuring Mozzarella, Gorgonzola, Parmesan, and Fontina melted together on a thin, crispy crust with a hint of rosemary.",
+			"price": 14.5
 		}
 	]
 }
