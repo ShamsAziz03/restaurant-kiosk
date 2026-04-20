@@ -1,5 +1,5 @@
-import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import AddToCartButton from "@/components/customComponents/addToCartButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export type FoodItem = {
@@ -13,7 +13,6 @@ export type FoodItem = {
 	price: number;
 };
 
-import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -74,9 +73,17 @@ export default async function Categories({
 									<button type="button">View Details</button>
 								</Link>
 
-								<Button className="border-2 border-black rounded-lg">
-									<ShoppingCart />
-								</Button>
+								<AddToCartButton
+									categoryId={item.categoryId}
+									description={item.description}
+									details={item.details}
+									id={item.id}
+									image={item.image}
+									key={item.id}
+									price={item.price}
+									rating={item.rating}
+									title={item.title}
+								/>
 							</CardFooter>
 						</Card>
 					))}
