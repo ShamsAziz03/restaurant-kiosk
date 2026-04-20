@@ -2,16 +2,14 @@
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import CartItemComponent from "@/components/customComponents/cartItem";
-import { useCartStore } from "@/source/cartStore";
+import { useCartStore, useCartTotal } from "@/source/cartStore";
 import type { FoodItem } from "../../app/(user-features)/categories/page";
 
 export type CartItem = FoodItem & { qnt: number };
 
 const CartComponent = () => {
 	const cartItems = useCartStore((state) => state.items);
-	const tax = useCartStore((state) => state.tax);
-	const subTotal = useCartStore((state) => state.subTotal);
-	const total = useCartStore((state) => state.total);
+	const { total, subTotal, tax } = useCartTotal();
 
 	return (
 		<div className="bg-gray-50 w-[35%] h-[100vh] border-r-black border-2 sticky top-0">
