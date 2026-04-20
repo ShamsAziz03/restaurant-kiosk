@@ -1,6 +1,7 @@
-import { ChevronLeft, Star } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import AddToCartButton from "@/components/customComponents/addToCartButton";
+import RatingComponent from "@/components/customComponents/ratingComponent";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -58,36 +59,10 @@ export default async function ProductDetails({
 								</p>
 							</div>
 
-							<div className="flex items-center mt-2 space-x-2">
-								<div className="flex text-yellow-400">
-									<Star
-										className={"text-yellow-300"}
-										fill={"currentColor"}
-										size={18}
-									/>
-									<Star
-										className={"text-yellow-300"}
-										fill={"currentColor"}
-										size={18}
-									/>
-									<Star
-										className={"text-yellow-300"}
-										fill={"currentColor"}
-										size={18}
-									/>
-									<Star
-										className={"text-yellow-300"}
-										fill={"currentColor"}
-										size={18}
-									/>
-									<Star
-										className={"text-yellow-300"}
-										fill={"currentColor"}
-										size={18}
-									/>
-								</div>
-								<span className="text-sm font-medium text-slate-600">
-									({product?.rating})
+							<div className="flex gap-2 items-center">
+								<RatingComponent rating={product.rating} />
+								<span className="mt-1 font-bold text-lg">
+									({product.rating})
 								</span>
 							</div>
 						</div>
@@ -110,18 +85,15 @@ export default async function ProductDetails({
 								</CardTitle>
 							</CardHeader>
 							<CardContent className="p-4 space-y-2">
-								<div className="flex items-center text-sm">
-									<div className="w-2 h-2 rounded-full bg-green-500 mr-2" />
-									<span className="font-medium mr-2 text-slate-500">
-										Freshness:
-									</span>
-									Organic Ingredients
-								</div>
-								<div className="flex items-center text-sm">
-									<div className="w-2 h-2 rounded-full bg-green-500 mr-2" />
-									<span className="font-medium mr-2 text-slate-500">Prep:</span>
-									Hand-Stretched Dough
-								</div>
+								{product.specifications?.map((spec) => (
+									<div
+										className="flex items-center text-md font-bold"
+										key={spec}
+									>
+										<div className="w-2 h-2 rounded-full bg-green-500 mr-2" />
+										{spec}
+									</div>
+								))}
 							</CardContent>
 						</Card>
 

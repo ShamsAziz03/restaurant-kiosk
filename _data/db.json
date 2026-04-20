@@ -8,7 +8,14 @@
 			"description": "Classic pizza with tomato sauce, fresh mozzarella, and basil.",
 			"details": "Made with hand-stretched dough, San Marzano tomatoes, fresh buffalo mozzarella, extra virgin olive oil, and organic basil leaves.",
 			"rating": 4,
-			"price": 12.99
+			"price": 12.99,
+			"specifications": [
+				"Vegetarian",
+				"Contains Gluten",
+				"Contains Dairy",
+				"Wood-fired",
+				"Size: 12 inch"
+			]
 		},
 		{
 			"id": 2,
@@ -18,7 +25,14 @@
 			"rating": 3.5,
 			"description": "Juicy beef patty with lettuce, tomato, and our secret sauce.",
 			"details": "A 200g prime beef patty grilled to perfection, served on a toasted brioche bun with cheddar cheese, pickles, and our signature house sauce.",
-			"price": 10.5
+			"price": 10.5,
+			"specifications": [
+				"200g Beef Patty",
+				"Contains Gluten",
+				"Contains Dairy",
+				"Grilled",
+				"Served with Fries"
+			]
 		},
 		{
 			"id": 3,
@@ -28,7 +42,14 @@
 			"rating": 2.5,
 			"description": "Spicy pasta with garlic, tomatoes, and dried red chili peppers.",
 			"details": "Al dente penne pasta tossed in a fiery tomato sauce made with fresh garlic, chili flakes, and parsley. Finished with a drizzle of spicy olive oil.",
-			"price": 14.0
+			"price": 14.0,
+			"specifications": [
+				"Vegan",
+				"Contains Gluten",
+				"Spicy",
+				"Al dente",
+				"No Dairy"
+			]
 		},
 		{
 			"id": 4,
@@ -38,7 +59,14 @@
 			"rating": 4,
 			"description": "Fresh cucumbers, tomatoes, olives, and feta cheese with olive oil.",
 			"details": "Crisp cucumbers, vine-ripened tomatoes, red onions, Kalamata olives, and a thick slice of premium feta cheese, seasoned with dried oregano.",
-			"price": 8.5
+			"price": 8.5,
+			"specifications": [
+				"Vegetarian",
+				"Gluten Free",
+				"Contains Dairy",
+				"Raw",
+				"No Added Sugar"
+			]
 		},
 		{
 			"id": 5,
@@ -48,7 +76,14 @@
 			"rating": 5,
 			"description": "Refreshing cold drink with fresh berries and lemon slices.",
 			"details": "Hand-squeezed lemon juice mixed with muddled raspberries and blueberries, served over crushed ice with a hint of mint.",
-			"price": 4.5
+			"price": 4.5,
+			"specifications": [
+				"Vegan",
+				"Gluten Free",
+				"No Dairy",
+				"Cold Served",
+				"500ml"
+			]
 		},
 		{
 			"id": 6,
@@ -58,7 +93,14 @@
 			"rating": 5,
 			"description": "Soft donut dipped in rich Belgian chocolate ganache.",
 			"details": "Freshly baked yeast donut, glazed with a smooth 70% cocoa Belgian chocolate and sprinkled with dark chocolate shavings.",
-			"price": 3.99
+			"price": 3.99,
+			"specifications": [
+				"Vegetarian",
+				"Contains Gluten",
+				"Contains Dairy",
+				"70% Belgian Chocolate",
+				"Freshly Baked"
+			]
 		},
 		{
 			"id": 7,
@@ -66,9 +108,16 @@
 			"title": "Pepperoni Feast",
 			"image": "https://images.unsplash.com/photo-1692737580547-b45bb4a02356?q=80&w=915&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 			"rating": 3.5,
-			"description": "Loaded with pepperoni and extra mozzarella cheese.",
+			"description": "Loaded with pepperoni and double extra mozzarella cheese.",
 			"details": "Our classic crust topped with double portions of spicy pepperoni slices and a blend of mozzarella and provolone cheese.",
-			"price": 15.99
+			"price": 15.99,
+			"specifications": [
+				"Contains Gluten",
+				"Contains Dairy",
+				"Contains Pork",
+				"Extra Cheese",
+				"Size: 12 inch"
+			]
 		},
 		{
 			"id": 8,
@@ -78,7 +127,14 @@
 			"rating": 2.4,
 			"description": "Plant-based patty with avocado and sprouts.",
 			"details": "A homemade patty made from black beans, quinoa, and roasted vegetables, topped with smashed avocado and organic alfalfa sprouts.",
-			"price": 11.0
+			"price": 11.0,
+			"specifications": [
+				"Vegan",
+				"Contains Gluten",
+				"No Dairy",
+				"Plant-Based",
+				"Served with Fries"
+			]
 		},
 		{
 			"id": 9,
@@ -88,7 +144,14 @@
 			"rating": 5,
 			"description": "Rich white sauce pasta with mushrooms and parmesan.",
 			"details": "Broad fettuccine noodles coated in a velvety sauce made from heavy cream, butter, garlic, and freshly grated parmesan cheese.",
-			"price": 16.5
+			"price": 16.5,
+			"specifications": [
+				"Vegetarian",
+				"Contains Gluten",
+				"Contains Dairy",
+				"Creamy",
+				"Contains Mushrooms"
+			]
 		},
 		{
 			"id": 10,
@@ -98,7 +161,14 @@
 			"rating": 4.5,
 			"description": "Grilled chicken, red onions, and cilantro on tangy BBQ sauce.",
 			"details": "Topped with smoky BBQ sauce, tender grilled chicken breast pieces, thinly sliced red onions, and fresh cilantro over a blend of mozzarella and smoked gouda.",
-			"price": 16.5
+			"price": 16.5,
+			"specifications": [
+				"Contains Gluten",
+				"Contains Dairy",
+				"Contains Chicken",
+				"Smoky BBQ",
+				"Size: 12 inch"
+			]
 		},
 		{
 			"id": 11,
@@ -108,7 +178,14 @@
 			"rating": 4.8,
 			"description": "White pizza with wild mushrooms and aromatic truffle oil.",
 			"details": "A sophisticated blend of cremini, shiitake, and oyster mushrooms on a garlic cream base, finished with a drizzle of premium white truffle oil and fresh parsley.",
-			"price": 18.99
+			"price": 18.99,
+			"specifications": [
+				"Vegetarian",
+				"Contains Gluten",
+				"Contains Dairy",
+				"Contains Truffle Oil",
+				"Size: 12 inch"
+			]
 		},
 		{
 			"id": 12,
@@ -118,7 +195,14 @@
 			"rating": 4.2,
 			"description": "Rich blend of four premium Italian cheeses.",
 			"details": "A cheese lover's dream featuring Mozzarella, Gorgonzola, Parmesan, and Fontina melted together on a thin, crispy crust with a hint of rosemary.",
-			"price": 14.5
+			"price": 14.5,
+			"specifications": [
+				"Vegetarian",
+				"Contains Gluten",
+				"Contains Dairy",
+				"4 Cheese Blend",
+				"Size: 12 inch"
+			]
 		}
 	],
 	"categories": [

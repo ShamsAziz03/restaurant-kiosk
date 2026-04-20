@@ -11,6 +11,7 @@ export type FoodItem = {
 	description: string;
 	details: string;
 	price: number;
+	specifications?: string[];
 };
 
 import {
