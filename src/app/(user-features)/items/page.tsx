@@ -1,5 +1,6 @@
-import { ChevronLeft, ShoppingCart, Star } from "lucide-react";
+import { ChevronLeft, Star } from "lucide-react";
 import Link from "next/link";
+import AddToCartButton from "@/components/customComponents/addToCartButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -124,16 +125,19 @@ export default async function ProductDetails({
 							</CardContent>
 						</Card>
 
-						<div className="flex flex-col sm:flex-row gap-3 pt-4">
-							<Button
-								className="flex-1 bg-black hover:bg-slate-800 text-white py-6 text-lg"
-								size="lg"
-							>
-								Add To Cart
-								<span className="ml-3">
-									<ShoppingCart />
-								</span>
-							</Button>
+						<div className="flex justify-center items-center bg-gray-200 hover:bg-slate-400 text-black p-3">
+							<span className="mr-5 font-bold text-xl">Add To Cart</span>
+							<AddToCartButton
+								categoryId={product.categoryId}
+								description={product.description}
+								details={product.details}
+								id={product.id}
+								image={product.image}
+								key={product.id}
+								price={product.price}
+								rating={product.rating}
+								title={product.title}
+							/>
 						</div>
 					</div>
 				</div>

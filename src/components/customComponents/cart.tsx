@@ -9,6 +9,9 @@ export type CartItem = FoodItem & { qnt: number };
 
 const CartComponent = () => {
 	const cartItems = useCartStore((state) => state.items);
+	const tax = useCartStore((state) => state.tax);
+	const subTotal = useCartStore((state) => state.subTotal);
+	const total = useCartStore((state) => state.total);
 
 	return (
 		<div className="bg-gray-50 w-[35%] h-[100vh] border-r-black border-2 sticky top-0">
@@ -42,15 +45,15 @@ const CartComponent = () => {
 			<div className="border-2 border-t-gray-400 border-b-gray-400 flex flex-col justify-center items-center">
 				<p className="font-bold text-md">
 					Subtotal:
-					<span className="text-xl ml-8 text-green-500">50 $</span>
+					<span className="text-xl ml-8 text-green-500">{subTotal} $</span>
 				</p>
 				<p className="font-bold text-md">
 					Tax:
-					<span className="text-xl ml-10 text-green-500">10 $</span>
+					<span className="text-xl ml-10 text-green-500">{tax} $</span>
 				</p>
 				<p className="text-md font-bold">
 					Total:
-					<span className="text-xl ml-10 text-green-500">60 $</span>
+					<span className="text-xl ml-10 text-green-500">{total} $</span>
 				</p>
 			</div>
 			<div className="flex justify-center items-center p-1">

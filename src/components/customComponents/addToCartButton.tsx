@@ -6,12 +6,10 @@ import { useCartStore } from "@/source/cartStore";
 
 const AddToCartButton = (props: FoodItem) => {
 	const addToCart = useCartStore((state) => state.addItem);
-	const items = useCartStore((state) => state.items);
 
 	function addItemToCart() {
 		const newItem = { ...props, qnt: 1 };
 		addToCart(newItem);
-		console.log(JSON.stringify(items, null, 2));
 	}
 
 	return (
