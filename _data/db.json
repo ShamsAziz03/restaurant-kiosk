@@ -120,5 +120,43 @@
 			"details": "A cheese lover's dream featuring Mozzarella, Gorgonzola, Parmesan, and Fontina melted together on a thin, crispy crust with a hint of rosemary.",
 			"price": 14.5
 		}
+	],
+	"categories": [
+		{
+			"id": "1",
+			"value": "Pizza",
+			"icon": "https://img.icons8.com/doodle/48/pizza--v1.png",
+			"alt": "pizzaIcon"
+		},
+		{
+			"id": "2",
+			"value": "Burger",
+			"icon": "https://img.icons8.com/office/40/hamburger.png",
+			"alt": "burgerIcon"
+		},
+		{
+			"id": "3",
+			"value": "Pasta",
+			"icon": "https://img.icons8.com/office/40/spaghetti.png",
+			"alt": "pastaIcon"
+		},
+		{
+			"id": "4",
+			"value": "Salads",
+			"icon": "https://img.icons8.com/office/40/avocado.png",
+			"alt": "saladsIcon"
+		},
+		{
+			"id": "5",
+			"value": "Drinks",
+			"icon": "https://img.icons8.com/office/40/cocktail.png",
+			"alt": "drinksIcon"
+		},
+		{
+			"id": "6",
+			"value": "Deserts",
+			"icon": "https://img.icons8.com/office/40/doughnut.png",
+			"alt": "dessertsIcon"
+		}
 	]
 }
