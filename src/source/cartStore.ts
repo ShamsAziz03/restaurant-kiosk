@@ -42,11 +42,11 @@ export const useCartTotal = () => {
 
 	let total = 0;
 	let subTotal = 0;
-	const tax = 10;
+	const tax = 10; //10%
 
 	items.forEach((item) => {
 		subTotal += item.price * item.qnt;
 	});
-	total = subTotal + tax;
+	total = subTotal + subTotal * (tax / 100);
 	return { total, subTotal, tax };
 };

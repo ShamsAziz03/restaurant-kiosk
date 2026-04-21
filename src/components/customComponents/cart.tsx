@@ -47,7 +47,7 @@ const CartComponent = () => {
 				</p>
 				<p className="font-bold text-md">
 					Tax:
-					<span className="text-xl ml-10 text-green-500">{tax} $</span>
+					<span className="text-xl ml-10 text-green-500">{tax} %</span>
 				</p>
 				<p className="text-md font-bold">
 					Total:
