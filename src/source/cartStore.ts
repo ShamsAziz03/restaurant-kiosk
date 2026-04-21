@@ -1,16 +1,21 @@
 import { create } from "zustand";
 import type { CartItem } from "@/components/customComponents/cart";
 
+type typeOfOrder = "dineIn" | "takeAway";
+
 type StoreProps = {
 	items: CartItem[];
+	typeOfOrder: typeOfOrder;
 
 	addItem: (item: CartItem) => void;
 	changeItemQnt: (itemId: number, qnt: number) => void;
 	removeItem: (itemId: number) => void;
+	setTypeofOrder: (type: typeOfOrder) => void;
 };
 
 export const useCartStore = create<StoreProps>((set, get) => ({
 	items: [],
+	typeOfOrder: "takeAway",
 
 	addItem: (item) => {
 		const itemIndex = get().items.findIndex((t) => t.id === item.id);
@@ -35,6 +40,7 @@ export const useCartStore = create<StoreProps>((set, get) => ({
 		const newItems = cartItems.filter((item) => item.id !== itemId);
 		set({ items: newItems });
 	},
+	setTypeofOrder: (type) => set({ typeOfOrder: type }),
 }));
 
 export const useCartTotal = () => {

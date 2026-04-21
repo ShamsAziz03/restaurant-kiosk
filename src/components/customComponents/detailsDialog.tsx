@@ -5,6 +5,8 @@ import type { FoodItem } from "@/app/(user-features)/categories/page";
 import AddToCartButton from "@/components/customComponents/addToCartButton";
 import RatingComponent from "@/components/customComponents/ratingComponent";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import {
 	Dialog,
 	DialogClose,
@@ -15,7 +17,6 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
 
 type Props = {
 	item: FoodItem;
@@ -82,8 +83,27 @@ const DetailsDialog = (props: Props) => {
 							<p className="text-slate-700">{props.item.details}</p>
 						</div>
 
-						<div className="flex justify-center items-center bg-gray-200 hover:bg-slate-400 text-black p-3">
-							<span className="mr-5 font-bold text-xl">Add To Cart</span>
+						<Card className="border-slate-200">
+							<CardHeader className="py-3 px-4 bg-slate-50 border-b">
+								<CardTitle className="text-sm font-bold uppercase tracking-wider">
+									Specifications
+								</CardTitle>
+							</CardHeader>
+							<CardContent className="p-4 space-y-2">
+								{props.item.specifications?.map((spec) => (
+									<div
+										className="flex items-center text-md font-bold"
+										key={spec}
+									>
+										<div className="w-2 h-2 rounded-full bg-green-500 mr-2" />
+										{spec}
+									</div>
+								))}
+							</CardContent>
+						</Card>
+
+						<div className="flex justify-center items-center text-black">
+							<span className="mr-5 font-bold text-2xl">Add To Cart</span>
 							<AddToCartButton
 								categoryId={props.item.categoryId}
 								description={props.item.description}

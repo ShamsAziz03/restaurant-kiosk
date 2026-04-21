@@ -1,6 +1,4 @@
 "use client";
-import { Newspaper } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
 import type { FoodItem } from "@/app/(user-features)/categories/page";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -27,7 +25,7 @@ export default function CategoriesClient({
 			{foodItems.length > 0 &&
 				foodItems.map((item) => (
 					<Card
-						className="relative top-0 transition-[top] duration-[350ms] ease-in-out hover:-top-[10px]"
+						className="relative top-0 transition-[top] duration-[350ms] ease-in-out hover:-top-[10px] border-gray-300 border-2"
 						key={item.id}
 					>
 						<CardHeader className="flex flex-col gap-3 justify-center items-center">
@@ -48,14 +46,12 @@ export default function CategoriesClient({
 							</p>
 						</CardContent>
 						<CardFooter className="flex justify-center items-center gap-3">
-							<Link
+							<button
 								className="text-center text-xl font-semibold text-white bg-gray-800 rounded-[10px] shadow-xl w-[100%] p-1 hover:bg-gray-400 border-2 hover:shadow-2xl hover:text-black"
-								href={`/items?itemId=${item.id}`}
+								onClick={() => setActiveId(item.id)}
+								type="button"
 							>
-								<button type="button">View Details</button>
-							</Link>
-							<button onClick={() => setActiveId(item.id)} type="button">
-								<Newspaper size={25} />
+								View Details
 							</button>
 							<DetailsDialog
 								activeId={activeId}
