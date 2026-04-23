@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -35,7 +36,9 @@ export default function RootLayout({
 			)}
 			lang="en"
 		>
-			<body>{children}</body>
+			<body>
+				<ReactQueryProvider>{children}</ReactQueryProvider>
+			</body>
 		</html>
 	);
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import CheckOutItemCard from "./checkOutItemCard";
 
 export type ExtraItem = {
@@ -8,23 +8,25 @@ export type ExtraItem = {
 	price: number;
 };
 
+const fetchExtras = async () => {
+	try {
+		const response = await fetch("http://localhost:4000/extrasItems");
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error("Failed to fetch extras:", error);
+	}
+};
+
 const ExtrasItemsList = () => {
-	const [items, setItems] = useState<ExtraItem[]>([]);
+	const { data, isLoading, error } = useQuery({
+		queryKey: ["extrasItems"],
+		queryFn: fetchExtras,
+	});
+	if (isLoading) return <div>Loading...</div>;
+	if (error) return <div>Error: {error.message}</div>;
 
-	useEffect(() => {
-		const fetchExtras = async () => {
-			try {
-				const response = await fetch("http://localhost:4000/extrasItems");
-				const data = await response.json();
-				setItems(data);
-			} catch (error) {
-				console.error("Failed to fetch extras:", error);
-			}
-		};
-		fetchExtras();
-	}, []);
-
-	return <CheckOutItemCard items={items} />;
+	return <CheckOutItemCard items={data} />;
 };
 
 export default ExtrasItemsList;
