@@ -1,15 +1,17 @@
 "use client";
 import { ShoppingCart } from "lucide-react";
-import Link from "next/link";
+import { useState } from "react";
 import CartItemComponent from "@/components/customComponents/cartItem";
 import { useCartStore, useCartTotal } from "@/source/cartStore";
 import type { FoodItem } from "../../app/(user-features)/categories/page";
+import CheckOutDialog from "./checkOutDialog";
 
 export type CartItem = FoodItem & { qnt: number };
 
 const CartComponent = () => {
 	const cartItems = useCartStore((state) => state.items);
 	const { total, subTotal, tax } = useCartTotal();
+	const [openCheckOut, setOpenCheckOut] = useState(false);
 
 	return (
 		<div className="bg-gray-50 w-[35%] h-[100vh] border-r-black border-2 sticky top-0">
@@ -55,12 +57,18 @@ const CartComponent = () => {
 				</p>
 			</div>
 			<div className="flex justify-center items-center p-1">
-				<Link
+				<button
 					className="text-center text-xl font-semibold text-white bg-gray-800 rounded-[10px] shadow-xl w-[100%] p-2 m-2 border-2"
-					href="/"
+					onClick={() => setOpenCheckOut(true)}
+					type="button"
 				>
-					<button type="button">Check Out</button>
-				</Link>
+					Check Out
+				</button>
+
+				<CheckOutDialog
+					openCheckOut={openCheckOut}
+					setOpenCheckOut={setOpenCheckOut}
+				/>
 			</div>
 		</div>
 	);
