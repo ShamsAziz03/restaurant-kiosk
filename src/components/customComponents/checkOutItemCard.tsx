@@ -2,6 +2,7 @@
 import { Minus, Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useCartStore } from "@/source/cartStore";
 import { Button } from "../ui/button";
 import type { CartItem } from "./cart";
@@ -34,52 +35,55 @@ const CheckOutItemCard = (props: Props) => {
 	};
 
 	return (
-		<div className="flex gap-4 overflow-x-auto bg-[#eaeaea] p-4 rounded-2xl border border-gray-800">
-			{props.items.map((item) => (
-				<Card className="bg-[#1c1c1f] text-white shadow-lg" key={item.id}>
-					<CardContent className="min-w-[140px] h-full p-2 flex flex-col items-center justify-center gap-3">
-						<div className="flex gap-3 items-center">
-							<Avatar className="w-[60px] h-[60px]">
-								<AvatarImage alt={item.title} src={item.image} />
-								<AvatarFallback>{item.title.toUpperCase()}</AvatarFallback>
-							</Avatar>
-							<div>
-								<p className="text-gray-200 text-md">{item.title}</p>
-								<p className="font-bold text-lg">{item.price} $</p>
+		<ScrollArea>
+			<div className="flex gap-4 bg-[#eaeaea] p-4 rounded-2xl border border-gray-800">
+				{props.items.map((item) => (
+					<Card className="bg-[#1c1c1f] text-white shadow-lg" key={item.id}>
+						<CardContent className="min-w-[140px] h-full p-2 flex flex-col items-center justify-center gap-3">
+							<div className="flex gap-3 items-center">
+								<Avatar className="w-[60px] h-[60px]">
+									<AvatarImage alt={item.title} src={item.image} />
+									<AvatarFallback>{item.title.toUpperCase()}</AvatarFallback>
+								</Avatar>
+								<div>
+									<p className="text-gray-200 text-md">{item.title}</p>
+									<p className="font-bold text-lg">{item.price} $</p>
+								</div>
 							</div>
-						</div>
-						<div className="flex items-center justify-between bg-gray-400 rounded-full p-1 w-[90%] mt-auto">
-							<Button
-								className="rounded-full bg-black text-white font-bold"
-								onClick={() => minusQnt(item)}
-								size="icon-xs"
-							>
-								<Minus />
-							</Button>
+							<div className="flex items-center justify-between bg-gray-400 rounded-full p-1 w-[90%] mt-auto">
+								<Button
+									className="rounded-full bg-black text-white font-bold"
+									onClick={() => minusQnt(item)}
+									size="icon-xs"
+								>
+									<Minus />
+								</Button>
 
-							<span className="text-md font-bold text-black mx-2">
-								{"qnt" in item ? item.qnt : isExtraItemExist(item.id)}
-							</span>
+								<span className="text-md font-bold text-black mx-2">
+									{"qnt" in item ? item.qnt : isExtraItemExist(item.id)}
+								</span>
 
-							<Button
-								className="rounded-full bg-black text-white font-bold"
-								onClick={() =>
-									"qnt" in item
-										? changeQntOfItem(item.id, item.qnt + 1)
-										: changeQntOfExtraItem(item, "inc")
-								}
-								size="icon-xs"
-							>
-								<Plus />
-							</Button>
-						</div>
-					</CardContent>
-				</Card>
-			))}
-			{!props.items.length && (
-				<h1 className="font-bold text-lg">No items to show !</h1>
-			)}
-		</div>
+								<Button
+									className="rounded-full bg-black text-white font-bold"
+									onClick={() =>
+										"qnt" in item
+											? changeQntOfItem(item.id, item.qnt + 1)
+											: changeQntOfExtraItem(item, "inc")
+									}
+									size="icon-xs"
+								>
+									<Plus />
+								</Button>
+							</div>
+						</CardContent>
+					</Card>
+				))}
+				{!props.items.length && (
+					<h1 className="font-bold text-lg">No items to show !</h1>
+				)}
+			</div>
+			<ScrollBar orientation="horizontal" />
+		</ScrollArea>
 	);
 };
 
