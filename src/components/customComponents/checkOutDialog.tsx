@@ -7,7 +7,6 @@ import {
 	Trash2,
 } from "lucide-react"; // Import for the delete icon
 import type { Dispatch, SetStateAction } from "react";
-import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
 	Dialog,
@@ -18,9 +17,11 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { useCartStore } from "@/source/cartStore";
+import type { ExtrasItem, typeOfOrder } from "@/source/cartStore";
+import { useCartStore, useCartTotal } from "@/source/cartStore";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import type { CartItem } from "./cart";
 import CheckOutItemCard from "./checkOutItemCard";
 import ExtrasItemsList from "./extrasItemsList";
 
@@ -28,14 +29,43 @@ type CheckoutProps = {
 	openCheckOut: boolean;
 	setOpenCheckOut: Dispatch<SetStateAction<boolean>>;
 };
+export type Order = {
+	items: CartItem[];
+	typeOfOrder: typeOfOrder;
+	extraItems: ExtrasItem[];
+	specialInstructions: string;
+};
+
+async function addOrderToDB(order: Order) {
+	try {
+		const id = crypto.randomUUID();
+		const orderData = { ...order, orderId: id };
+		const response = await fetch("http://localhost:4000/orders", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(orderData),
+		});
+
+		const data = await response.json();
+
+		if (response.ok) {
+			alert("Order placed successfully!");
+		} else {
+			alert(data.message);
+		}
+	} catch (error) {
+		console.error("Failed to fetch extras:", error);
+	}
+}
 
 const CheckOutDialog = (props: CheckoutProps) => {
-	const cartItems = useCartStore((state) => state.items);
-	const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
-	const discount = 2.0;
-	const tax = 0.5;
-	const totalToPay = subtotal - discount + tax;
-	const [specialInstructions, setSpecialInstructions] = useState("");
+	const cartItems = useCartStore((state) => state.orderDetails.items);
+	const { cartSubTotal, tax, extrasTotal, finalTotal } = useCartTotal();
+	const setSpecialInstructions = useCartStore(
+		(state) => state.setSpecialInstructions,
+	);
+	const orderDetails = useCartStore((state) => state.orderDetails);
+	const clearOrder = useCartStore((state) => state.clearOrder);
 
 	return (
 		<Dialog
@@ -98,7 +128,7 @@ const CheckOutDialog = (props: CheckoutProps) => {
 							className="bg-[#eaeaea] border-black text-black placeholder:text-gray-900 rounded-xl"
 							onChange={(e) => setSpecialInstructions(e.target.value)}
 							placeholder="e.g. No onions, extra spicy, etc..."
-							value={specialInstructions}
+							value={orderDetails.specialInstructions}
 						/>
 					</div>
 
@@ -110,33 +140,38 @@ const CheckOutDialog = (props: CheckoutProps) => {
 							</h3>
 						</div>
 						<div className="flex justify-between text-black font-bold">
-							<span>Total</span>
-							<span>${subtotal}</span>
+							<span>Cart Total</span>
+							<span>${cartSubTotal}</span>
 						</div>
 						<div className="flex justify-between text-black font-bold">
-							<span>Discounts</span>
-							<span>-${discount}</span>
+							<span>Extras Total</span>
+							<span>${extrasTotal}</span>
 						</div>
 						<div className="flex justify-between text-black font-bold">
 							<span>Tax and fees</span>
-							<span>${tax}</span>
+							<span>%{tax}</span>
 						</div>
+
 						<div className="flex justify-between text-black font-bold text-xl pt-2 border-t border-gray-800">
 							<span>TO PAY</span>
-							<span>${totalToPay > 0 ? totalToPay : "0.00"}</span>
+							<span>${finalTotal || "0.00"}</span>
 						</div>
 					</div>
 
 					<DialogFooter className="flex flex-row items-center gap-3 pb-4 pt-5">
-						<Button className="flex-1 bg-[#adadad] text-black font-bold h-14 rounded-2xl flex justify-between px-8 text-lg">
+						<Button
+							className="flex-1 bg-[#adadad] text-black font-bold h-14 rounded-2xl flex justify-between px-8 text-lg"
+							onClick={() => addOrderToDB(orderDetails)}
+						>
 							<span>
-								{cartItems.length} ITEMS | ${totalToPay}
+								{cartItems.length} ITEMS | ${finalTotal}
 							</span>
 							<span>CHECKOUT</span>
 						</Button>
 
 						<Button
 							className="h-14 w-14 rounded-2xl bg-gray-800"
+							onClick={() => clearOrder()}
 							variant="destructive"
 						>
 							<Trash2 className="w-6 h-6 text-red-500" />

@@ -9,8 +9,8 @@ import CheckOutDialog from "./checkOutDialog";
 export type CartItem = FoodItem & { qnt: number };
 
 const CartComponent = () => {
-	const cartItems = useCartStore((state) => state.items);
-	const { total, subTotal, tax } = useCartTotal();
+	const cartItems = useCartStore((state) => state.orderDetails.items);
+	const { cartTotal, cartSubTotal, tax } = useCartTotal();
 	const [openCheckOut, setOpenCheckOut] = useState(false);
 
 	return (
@@ -45,7 +45,7 @@ const CartComponent = () => {
 			<div className="border-2 border-t-gray-400 border-b-gray-400 flex flex-col justify-center items-center">
 				<p className="font-bold text-md">
 					Subtotal:
-					<span className="text-xl ml-8 text-green-500">{subTotal} $</span>
+					<span className="text-xl ml-8 text-green-500">{cartSubTotal} $</span>
 				</p>
 				<p className="font-bold text-md">
 					Tax:
@@ -53,7 +53,7 @@ const CartComponent = () => {
 				</p>
 				<p className="text-md font-bold">
 					Total:
-					<span className="text-xl ml-10 text-green-500">{total} $</span>
+					<span className="text-xl ml-10 text-green-500">{cartTotal} $</span>
 				</p>
 			</div>
 			<div className="flex justify-center items-center p-1">
