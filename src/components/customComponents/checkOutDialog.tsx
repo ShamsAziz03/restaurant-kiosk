@@ -6,6 +6,7 @@ import {
 	Receipt,
 	Trash2,
 } from "lucide-react"; // Import for the delete icon
+import Link from "next/link";
 import type { Dispatch, SetStateAction } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -17,11 +18,9 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import type { ExtrasItem, typeOfOrder } from "@/source/cartStore";
 import { useCartStore, useCartTotal } from "@/source/cartStore";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
-import type { CartItem } from "./cart";
 import CheckOutItemCard from "./checkOutItemCard";
 import ExtrasItemsList from "./extrasItemsList";
 
@@ -29,34 +28,6 @@ type CheckoutProps = {
 	openCheckOut: boolean;
 	setOpenCheckOut: Dispatch<SetStateAction<boolean>>;
 };
-export type Order = {
-	items: CartItem[];
-	typeOfOrder: typeOfOrder;
-	extraItems: ExtrasItem[];
-	specialInstructions: string;
-};
-
-async function addOrderToDB(order: Order) {
-	try {
-		const id = crypto.randomUUID();
-		const orderData = { ...order, orderId: id };
-		const response = await fetch("http://localhost:4000/orders", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(orderData),
-		});
-
-		const data = await response.json();
-
-		if (response.ok) {
-			alert("Order placed successfully!");
-		} else {
-			alert(data.message);
-		}
-	} catch (error) {
-		console.error("Failed to fetch extras:", error);
-	}
-}
 
 const CheckOutDialog = (props: CheckoutProps) => {
 	const cartItems = useCartStore((state) => state.orderDetails.items);
@@ -64,7 +35,9 @@ const CheckOutDialog = (props: CheckoutProps) => {
 	const setSpecialInstructions = useCartStore(
 		(state) => state.setSpecialInstructions,
 	);
-	const orderDetails = useCartStore((state) => state.orderDetails);
+	const specialInstructions = useCartStore(
+		(state) => state.orderDetails.specialInstructions,
+	);
 	const clearOrder = useCartStore((state) => state.clearOrder);
 
 	return (
@@ -128,7 +101,7 @@ const CheckOutDialog = (props: CheckoutProps) => {
 							className="bg-[#eaeaea] border-black text-black placeholder:text-gray-900 rounded-xl"
 							onChange={(e) => setSpecialInstructions(e.target.value)}
 							placeholder="e.g. No onions, extra spicy, etc..."
-							value={orderDetails.specialInstructions}
+							value={specialInstructions}
 						/>
 					</div>
 
@@ -159,15 +132,15 @@ const CheckOutDialog = (props: CheckoutProps) => {
 					</div>
 
 					<DialogFooter className="flex flex-row items-center gap-3 pb-4 pt-5">
-						<Button
-							className="flex-1 bg-[#adadad] text-black font-bold h-14 rounded-2xl flex justify-between px-8 text-lg"
-							onClick={() => addOrderToDB(orderDetails)}
+						<Link
+							className="w-[100%] bg-[#adadad] text-black font-bold h-14 rounded-2xl flex justify-between p-4 text-lg"
+							href="/payment"
 						>
 							<span>
 								{cartItems.length} ITEMS | ${finalTotal}
 							</span>
 							<span>CHECKOUT</span>
-						</Button>
+						</Link>
 
 						<Button
 							className="h-14 w-14 rounded-2xl bg-gray-800"

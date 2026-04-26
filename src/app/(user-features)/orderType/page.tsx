@@ -16,7 +16,7 @@ export default function orderTypeComponent() {
 				<OrderTypes />
 				<div className="w-[100%] flex justify-end items-center mt-10">
 					<Link
-						className="p-3 pl-7 pr-7 border-2 border-black rounded-lg bg-gray-400 font-bold"
+						className="p-3 pl-7 pr-7 border-2 border-black rounded-lg bg-white font-bold"
 						href="/categories?categoryId=1"
 					>
 						Next
