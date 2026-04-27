@@ -10,7 +10,6 @@ const AddToCartButton = (props: FoodItem) => {
 	function addItemToCart() {
 		const newItem = { ...props, qnt: 1 };
 		addToCart(newItem);
-		alert("Item Added To Cart!");
 	}
 
 	return (

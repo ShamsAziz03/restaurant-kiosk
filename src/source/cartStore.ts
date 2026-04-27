@@ -6,19 +6,12 @@ export type typeOfOrder = "dineIn" | "takeAway";
 export type ExtrasItem = ExtraItem & { qnt: number };
 type Action = "inc" | "dec";
 
-export type TransactionDetails = {
-	expiryDate: string;
-	cardNumber: string;
-	cardholderName: string;
-};
-
 type StoreProps = {
 	orderDetails: {
 		items: CartItem[];
 		typeOfOrder: typeOfOrder;
 		extraItems: ExtrasItem[];
 		specialInstructions: string;
-		transactionDetails: TransactionDetails;
 	};
 
 	addItem: (item: CartItem) => void;
@@ -29,8 +22,6 @@ type StoreProps = {
 	removeExtraItem: (itemId: number) => void;
 	changeExtraItemQnt: (item: ExtraItem, action: Action) => void;
 	setSpecialInstructions: (instructions: string) => void;
-	clearOrder: () => void;
-	setTransactionDetail: (key: string, value: string) => void;
 };
 
 export const useCartStore = create<StoreProps>((set, get) => ({
@@ -39,11 +30,6 @@ export const useCartStore = create<StoreProps>((set, get) => ({
 		typeOfOrder: "takeAway",
 		extraItems: [],
 		specialInstructions: "",
-		transactionDetails: {
-			expiryDate: "",
-			cardNumber: "",
-			cardholderName: "",
-		},
 	},
 
 	addItem: (item) => {
@@ -135,34 +121,6 @@ export const useCartStore = create<StoreProps>((set, get) => ({
 				specialInstructions: instructions,
 			},
 		}),
-
-	clearOrder: () =>
-		set({
-			orderDetails: {
-				items: [],
-				typeOfOrder: "takeAway",
-				extraItems: [],
-				specialInstructions: "",
-				transactionDetails: {
-					expiryDate: "",
-					cardNumber: "",
-					cardholderName: "",
-				},
-			},
-		}),
-
-	setTransactionDetail: (key, value) => {
-		const orderDetails = get().orderDetails;
-		set({
-			orderDetails: {
-				...orderDetails,
-				transactionDetails: {
-					...orderDetails.transactionDetails,
-					[key]: value,
-				},
-			},
-		});
-	},
 }));
 
 export const useCartTotal = () => {
