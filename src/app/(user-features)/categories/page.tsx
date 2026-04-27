@@ -1,3 +1,5 @@
+import { Search } from "lucide-react";
+import Link from "next/link";
 import CategoriesClient from "@/components/customComponents/categoriesClient";
 
 export type FoodItem = {
@@ -29,7 +31,20 @@ export default async function Categories({
 
 	return (
 		<main>
-			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-10 m-5 justify-items-center">
+			<div className="mt-3 flex justify-end mr-10 gap-2">
+				<Link
+					className="p-2 bg-black text-white rounded-lg flex gap-3"
+					href="/search"
+				>
+					<Search
+						className="!w-[25px] !h-[25px] shrink-0"
+						color="white"
+						size={25}
+					/>
+					<p className="font-bold text-lg">Search</p>
+				</Link>
+			</div>
+			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-10 pt-5 justify-items-center">
 				<CategoriesClient foodItems={foodItems} />
 			</div>
 		</main>
