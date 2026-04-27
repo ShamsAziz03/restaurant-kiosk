@@ -6,7 +6,6 @@ import { useMemo, useState } from "react";
 import AddToCartButton from "@/components/customComponents/addToCartButton";
 import DetailsDialogSearch from "@/components/customComponents/detailsDialogSearch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 import {
 	Card,
 	CardContent,
@@ -16,6 +15,13 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+	Pagination,
+	PaginationContent,
+	PaginationItem,
+	PaginationNext,
+	PaginationPrevious,
+} from "@/components/ui/pagination";
 import type { FoodItem } from "../categories/page";
 
 const fetchItems = async () => {
@@ -31,6 +37,9 @@ const fetchItems = async () => {
 const SearchPage = () => {
 	const [query, setQuery] = useState("");
 	const [activeItem, setActiveItem] = useState<null | FoodItem>(null);
+	const rowsPerPage = 3;
+	const [startIndex, setStartIndex] = useState(0);
+	const [endIndex, setEndIndex] = useState(rowsPerPage);
 
 	const {
 		data: items,
@@ -76,7 +85,7 @@ const SearchPage = () => {
 			</p>
 
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-				{filteredData?.map((item: FoodItem) => (
+				{filteredData?.slice(startIndex, endIndex).map((item: FoodItem) => (
 					<Card
 						className="relative top-0 transition-[top] duration-[350ms] ease-in-out hover:-top-[10px] border-gray-300 border-2"
 						key={item.id}
@@ -126,6 +135,38 @@ const SearchPage = () => {
 				activeItem={activeItem}
 				setActiveItem={setActiveItem}
 			/>
+
+			<Pagination>
+				<PaginationContent className="w-[100%] flex justify-center items-center gap-5 mt-5">
+					<PaginationItem>
+						<PaginationPrevious
+							className={`${
+								startIndex === 0 ? "pointer-events-none opacity-50" : undefined
+							} p-3 rounded-md text-black font-bold`}
+							onClick={() => {
+								setStartIndex(startIndex - rowsPerPage);
+								setEndIndex(endIndex - rowsPerPage);
+							}}
+							size={15}
+						/>
+					</PaginationItem>
+
+					<PaginationItem>
+						<PaginationNext
+							className={`${
+								endIndex >= filteredData.length
+									? "pointer-events-none opacity-50"
+									: undefined
+							} p-3 rounded-md text-black font-bold`}
+							onClick={() => {
+								setStartIndex(startIndex + rowsPerPage);
+								setEndIndex(endIndex + rowsPerPage);
+							}}
+							size={15}
+						/>
+					</PaginationItem>
+				</PaginationContent>
+			</Pagination>
 
 			{filteredData?.length === 0 && (
 				<div className="text-center text-gray-400 mt-20">
