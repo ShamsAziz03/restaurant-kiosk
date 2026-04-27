@@ -44,9 +44,7 @@ export default async function Categories({
 					<p className="font-bold text-lg">Search</p>
 				</Link>
 			</div>
-			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-10 pt-5 justify-items-center">
-				<CategoriesClient foodItems={foodItems} />
-			</div>
+			<CategoriesClient foodItems={foodItems} />
 		</main>
 	);
 }
