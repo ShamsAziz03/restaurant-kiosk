@@ -1,7 +1,8 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import Fuse from "fuse.js";
-import { Search } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import AddToCartButton from "@/components/customComponents/addToCartButton";
 import DetailsDialogSearch from "@/components/customComponents/detailsDialogSearch";
@@ -65,19 +66,28 @@ const SearchPage = () => {
 	if (error) return <div>Error in fetching items: {error.message}</div>;
 	return (
 		<div className="p-6 max-w-6xl mx-auto">
-			<div className="relative mb-8">
-				<Search
-					className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-					size={18}
-				/>
-				<Input
-					className="pl-10 h-12 text-md border-gray-300"
-					onChange={(event) => {
-						setQuery(event.target.value.trim());
-					}}
-					placeholder="Search for food..."
-					value={query}
-				/>
+			<div className="flex gap-4 w-[100%]">
+				<Link
+					className="flex items-center gap-2 p-1 bg-gray-700 text-white font-bold h-12 rounded-lg"
+					href="/categories?categoryId=1"
+				>
+					<ArrowLeft size={20} />
+					Go Back
+				</Link>
+				<div className="relative mb-8 flex-1">
+					<Search
+						className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+						size={18}
+					/>
+					<Input
+						className="pl-10 h-12 text-md border-gray-300"
+						onChange={(event) => {
+							setQuery(event.target.value.trim());
+						}}
+						placeholder="Search for food..."
+						value={query}
+					/>
+				</div>
 			</div>
 
 			<p className="text-gray-500 text-sm mb-4">
