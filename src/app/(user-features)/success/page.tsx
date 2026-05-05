@@ -1,8 +1,7 @@
 "use client";
 import { CheckCircle } from "lucide-react";
-import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import type { CartItem } from "@/components/customComponents/cart";
 import { Button } from "@/components/ui/button";
@@ -15,7 +14,7 @@ export type Order = {
 	specialInstructions: string;
 };
 
-async function addOrderToDB(order: Order, router: AppRouterInstance) {
+async function addOrderToDB(order: Order) {
 	try {
 		const id = crypto.randomUUID();
 		const orderData = {
@@ -33,7 +32,6 @@ async function addOrderToDB(order: Order, router: AppRouterInstance) {
 
 		if (responseOrder.ok) {
 			alert("Order placed successfully!");
-			router.push("/");
 		} else {
 			alert("Error Occuered");
 		}
@@ -43,7 +41,6 @@ async function addOrderToDB(order: Order, router: AppRouterInstance) {
 }
 
 export default function SuccessPage() {
-	const router = useRouter();
 	const searchParams = useSearchParams();
 	const orderDataRaw = searchParams.get("orderDetails");
 	const hasRun = useRef(false);
@@ -56,12 +53,12 @@ export default function SuccessPage() {
 				const decodedOrder = decodeURIComponent(orderDataRaw);
 				const orderObj = JSON.parse(decodedOrder);
 
-				addOrderToDB(orderObj, router);
+				addOrderToDB(orderObj);
 			} catch (error) {
 				console.error("Failed to parse order data:", error);
 			}
 		}
-	}, [orderDataRaw, router]);
+	}, [orderDataRaw]);
 
 	return (
 		<div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
