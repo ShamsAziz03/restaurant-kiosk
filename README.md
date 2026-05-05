@@ -3,14 +3,21 @@
 A multi-role restaurant management and ordering platform with separate applications for customers, kitchen staff, and administrators.
  
 ---
+## Final Project — Asal Training | Computer Engineering
+#### This is my final project developed during my training at **Asal Technologies**, in Frontend Development.
+---
  
 ## 🛠 Tech Stack
  
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Material-UI](https://img.shields.io/badge/Material--UI-007FFF?style=for-the-badge&logo=materialdesign&logoColor=white)
-![Axios](https://img.shields.io/badge/Axios-5A28CC?style=for-the-badge&logo=axios&logoColor=white)
- 
+![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcnui&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![Husky](https://img.shields.io/badge/Husky-000000?style=for-the-badge&logo=husky&logoColor=white)
+![Biome](https://img.shields.io/badge/Biome-60A5FA?style=for-the-badge&logo=biome&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white)
 ---
  
 ## 🎯 System Roles
@@ -21,9 +28,7 @@ A multi-role restaurant management and ordering platform with separate applicati
 - Search and filter items
 - Customize items with modifiers
 - Place orders for dine-in or take-away
-- Checkout with card or cash payment
-- Rate service and write reviews
-- Submit complaints to admin
+- Checkout with card using Stripe Payment.
  
 ### 👨‍🍳 Kitchen Staff App
 - View live incoming orders instantly
@@ -43,16 +48,7 @@ A multi-role restaurant management and ordering platform with separate applicati
 - View business analytics: sales by day/month, best/worst selling items, cancel rate, revenue
  
 ---
- 
-## 🎨 UI/UX Requirements
- 
-- All buttons and photos: **Minimum 48px × 48px**
-- **High-contrast colors** for kitchen staff app readability
-- **No keyboard input** for orders - only order numbers
-- Customer name and phone number only needed for reviews and complaints
- 
----
- 
+
 ## ⚙️ Setup & Installation
  
 ```bash
