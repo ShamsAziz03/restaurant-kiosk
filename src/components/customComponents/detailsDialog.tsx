@@ -28,6 +28,7 @@ const DetailsDialog = (props: Props) => {
 	const [openDialog, setOpenDialog] = useState(false);
 
 	const isOpen = props.activeId === props.item.id && !openDialog;
+	const specifications = (props.item.specifications as string[]) ?? [];
 
 	return (
 		<Dialog
@@ -90,7 +91,7 @@ const DetailsDialog = (props: Props) => {
 								</CardTitle>
 							</CardHeader>
 							<CardContent className="p-4 space-y-2">
-								{props.item.specifications?.map((spec) => (
+								{specifications.map((spec) => (
 									<div
 										className="flex items-center text-md font-bold"
 										key={spec}

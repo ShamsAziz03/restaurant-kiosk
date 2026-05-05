@@ -3,26 +3,14 @@ import Link from "next/link";
 import CartComponent from "@/components/customComponents/cart";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-
-type Category = {
-	id: string;
-	value: string;
-	icon: string;
-	alt: string;
-};
-
-async function getCategories(): Promise<Category[]> {
-	const response = await fetch(`http://localhost:4000/categories`);
-	const result = await response.json();
-	return result;
-}
+import prisma from "@/lib/prisma";
 
 export default async function CategoriesLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
-	const categories = await getCategories();
+	const categories = await prisma.categories.findMany();
 	return (
 		<section className="flex flex-row w-[100%] h-[100%] bg-[url(https://img.freepik.com/free-photo/sandwich-with-sundried-tomato-tasty-snack-concept_185193-109453.jpg?semt=ais_hybrid&w=740&q=80)] bg-cover bg-center">
 			{/* cart section */}

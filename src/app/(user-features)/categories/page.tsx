@@ -1,6 +1,8 @@
+import type { JsonValue } from "@prisma/client/runtime/client";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import CategoriesClient from "@/components/customComponents/categoriesClient";
+import prisma from "@/lib/prisma";
 
 export type FoodItem = {
 	id: number;
@@ -11,15 +13,8 @@ export type FoodItem = {
 	description: string;
 	details: string;
 	price: number;
-	specifications?: string[];
+	specifications?: JsonValue;
 };
-
-async function getFood(categoryId: string): Promise<FoodItem[]> {
-	const response = await fetch(
-		`http://localhost:4000/foodItems?categoryId=${categoryId}`,
-	);
-	return response.json();
-}
 
 export default async function Categories({
 	searchParams,
@@ -27,7 +22,11 @@ export default async function Categories({
 	searchParams: Promise<{ categoryId?: string }>;
 }) {
 	const { categoryId } = await searchParams;
-	const foodItems = await getFood(categoryId || "1");
+	const foodItems = await prisma.foodItems.findMany({
+		where: {
+			categoryId: Number(categoryId) ?? 1,
+		},
+	});
 
 	return (
 		<main>

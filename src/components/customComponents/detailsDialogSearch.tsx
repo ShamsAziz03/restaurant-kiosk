@@ -23,6 +23,7 @@ type Props = {
 };
 
 const DetailsDialogSearch = (props: Props) => {
+	const specifications = (props.activeItem?.specifications as string[]) ?? [];
 	return (
 		<Dialog
 			onOpenChange={() => {
@@ -86,7 +87,7 @@ const DetailsDialogSearch = (props: Props) => {
 								</CardTitle>
 							</CardHeader>
 							<CardContent className="p-4 space-y-2">
-								{props.activeItem?.specifications?.map((spec) => (
+								{specifications.map((spec) => (
 									<div
 										className="flex items-center text-md font-bold"
 										key={spec}
