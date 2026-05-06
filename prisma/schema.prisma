@@ -13,6 +13,12 @@ enum OrderType {
   dineIn
 }
 
+enum OrderStatus {
+  inProgress
+  completed
+  cancelled
+}
+
 model FoodItems {
   id             Int         @id @default(autoincrement())
   categoryId     Int //foreign key
@@ -45,9 +51,11 @@ model ExtraItems {
 }
 
 model Orders {
-  id                  Int       @id @default(autoincrement())
+  id                  Int         @id @default(autoincrement())
   typeOfOrder         OrderType
   specialInstructions String?
+  orderStatus         OrderStatus
+  createdAt           DateTime    @default(now())
 
   orderItems      orderItem[]
   orderExtraItems orderExtraItem[]

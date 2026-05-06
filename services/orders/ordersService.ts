@@ -16,6 +16,7 @@ class OrdersService {
 				data: {
 					typeOfOrder: order.typeOfOrder,
 					specialInstructions: order.specialInstructions,
+					orderStatus: "inProgress",
 				},
 			});
 
