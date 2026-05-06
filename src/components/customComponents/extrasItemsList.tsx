@@ -11,7 +11,7 @@ export type ExtraItem = {
 
 const fetchExtras = async () => {
 	try {
-		const response = await fetch("http://localhost:4000/extrasItems");
+		const response = await fetch("http://localhost:3000/api/extraItems");
 		const data = await response.json();
 		return data;
 	} catch (error) {

@@ -24,13 +24,14 @@ async function addOrderToDB(order: Order) {
 			extraItems: order.extraItems,
 			specialInstructions: order.specialInstructions,
 		};
-		const responseOrder = await fetch("http://localhost:4000/orders", {
+		const responseOrder = await fetch("http://localhost:3000/api/orders", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(orderData),
 		});
 
-		if (responseOrder.ok) {
+		const response = await responseOrder.json();
+		if (response.ok) {
 			alert("Order placed successfully!");
 		} else {
 			alert("Error Occuered");

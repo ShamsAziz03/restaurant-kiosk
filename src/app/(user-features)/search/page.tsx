@@ -27,7 +27,7 @@ import type { FoodItem } from "../categories/page";
 
 const fetchItems = async () => {
 	try {
-		const response = await fetch("http://localhost:4000/foodItems");
+		const response = await fetch("http://localhost:3000/api/items");
 		const data = await response.json();
 		return data;
 	} catch (error) {

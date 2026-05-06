@@ -22,6 +22,7 @@ type StoreProps = {
 	removeExtraItem: (itemId: number) => void;
 	changeExtraItemQnt: (item: ExtraItem, action: Action) => void;
 	setSpecialInstructions: (instructions: string) => void;
+	clearOrder: () => void;
 };
 
 export const useCartStore = create<StoreProps>((set, get) => ({
@@ -121,6 +122,17 @@ export const useCartStore = create<StoreProps>((set, get) => ({
 				specialInstructions: instructions,
 			},
 		}),
+
+	clearOrder: () => {
+		set({
+			orderDetails: {
+				items: [],
+				extraItems: [],
+				specialInstructions: "",
+				typeOfOrder: "takeAway",
+			},
+		});
+	},
 }));
 
 export const useCartTotal = () => {
