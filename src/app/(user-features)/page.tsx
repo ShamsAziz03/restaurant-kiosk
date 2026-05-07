@@ -14,6 +14,12 @@ export default function Home() {
 						Order Now
 					</Button>
 				</Link>
+
+				<Link className="text-center font-bold mt-10" href="/admin">
+					<Button className="text-xl" variant="link">
+						Admin's Log In
+					</Button>
+				</Link>
 			</div>
 		</main>
 	);
