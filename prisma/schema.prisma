@@ -1,0 +1,80 @@
+generator client {
+  provider   = "prisma-client-js"
+  output     = "../src/generated/prisma"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum OrderType {
+  takeAway
+  dineIn
+}
+
+enum OrderStatus {
+  inProgress
+  completed
+  cancelled
+}
+
+model FoodItems {
+  id             Int         @id @default(autoincrement())
+  categoryId     Int //foreign key
+  title          String
+  image          String
+  description    String
+  details        String
+  rating         Float
+  price          Float
+  specifications Json?
+  category       Categories  @relation(fields: [categoryId], references: [id])
+  orderItems     orderItem[]
+}
+
+model Categories {
+  id    Int    @id @default(autoincrement())
+  value String
+  icon  String
+  alt   String
+
+  foodItems FoodItems[]
+}
+
+model ExtraItems {
+  id              Int              @id @default(autoincrement())
+  title           String
+  price           Float
+  image           String
+  orderExtraItems orderExtraItem[]
+}
+
+model Orders {
+  id                  Int         @id @default(autoincrement())
+  typeOfOrder         OrderType
+  specialInstructions String?
+  orderStatus         OrderStatus
+  createdAt           DateTime    @default(now())
+
+  orderItems      orderItem[]
+  orderExtraItems orderExtraItem[]
+}
+
+model orderItem {
+  id       Int       @id @default(autoincrement())
+  orderId  Int
+  itemId   Int
+  quantity Int       @default(1)
+  order    Orders    @relation(fields: [orderId], references: [id])
+  item     FoodItems @relation(fields: [itemId], references: [id])
+}
+
+model orderExtraItem {
+  id        Int        @id @default(autoincrement())
+  orderId   Int
+  itemId    Int
+  quantity  Int        @default(1)
+  order     Orders     @relation(fields: [orderId], references: [id])
+  extraItem ExtraItems @relation(fields: [itemId], references: [id])
+}
