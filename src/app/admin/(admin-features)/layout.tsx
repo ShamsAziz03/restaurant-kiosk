@@ -1,43 +1,42 @@
+"use client";
 import "../../globals.css";
 import {
-	BarChart3,
 	ChefHat,
 	LayoutDashboard,
 	LogOut,
 	Menu,
 	MessageCircle,
-	MessageSquare,
+	Pencil,
+	PlusCircle,
 	ShoppingBag,
-	Star,
-	Tag,
 	Users,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navigation = [
-	{ name: "Dashboard", href: "/", icon: LayoutDashboard },
-	{ name: "Orders", href: "/", icon: ShoppingBag },
-	{ name: "Menu", href: "/", icon: Menu },
-	{ name: "Complaints", href: "/", icon: MessageSquare },
-	{ name: "Reviews", href: "/", icon: Star },
-	{ name: "Reports", href: "/", icon: BarChart3 },
-	{ name: "Offers", href: "/", icon: Tag },
-	{ name: "Employees", href: "/", icon: Users },
-	{ name: "Messages", href: "/", icon: MessageCircle },
-	{ name: "LogOut", href: "/", icon: LogOut },
+	{ name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+	{ name: "Orders", href: "/admin/orders", icon: ShoppingBag },
+	{ name: "Menu", href: "/admin/menu", icon: Menu },
+	{ name: "Employees", href: "/admin/employees", icon: Users },
+	{ name: "Messages", href: "/admin/messages", icon: MessageCircle },
+	{ name: "Add New Admin", href: "/admin/newAdmin", icon: PlusCircle },
+	{ name: "Edit Profile", href: "/admin/editProfile", icon: Pencil },
+	{ name: "LogOut", href: "/admin", icon: LogOut },
 ];
 
-export default async function AdminLayout({
+export default function AdminLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
+	const pathname = usePathname();
 	return (
 		<section className="flex flex-row w-[100%] h-[100vh] relative">
 			{/* Sidebar */}
-			<div className="w-[20%] bg-white shadow-lg h-[100vh] fixed">
+			<div className="w-[20%] bg-white h-[100vh] fixed">
 				<div className="flex items-center gap-3 p-6 border-b">
-					<ChefHat className="w-8 h-8 text-orange-500" />
+					<ChefHat className="w-8 h-8 text-gray-500" />
 					<h1 className="text-xl font-bold text-gray-800">Restaurant Admin</h1>
 				</div>
 
@@ -45,7 +44,12 @@ export default async function AdminLayout({
 					{navigation.map((item) => {
 						return (
 							<Link
-								className={`flex items-center gap-3 p-3 rounded-lg ${"text-gray-700 hover:bg-gray-100"}`}
+								className={`flex items-center gap-3 p-3 rounded-lg border-l-4
+    ${
+			pathname === item.href
+				? "border-indigo-500 bg-indigo-50 text-indigo-700"
+				: "text-gray-500 border-transparent"
+		}`}
 								href={item.href}
 								key={item.name}
 							>

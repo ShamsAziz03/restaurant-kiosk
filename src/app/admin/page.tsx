@@ -1,5 +1,5 @@
 "use client";
-import { ChefHat, Lock, Mail } from "lucide-react";
+import { ArrowLeft, ChefHat, Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -9,15 +9,23 @@ const page = () => {
 
 	return (
 		<div className="flex items-center justify-center p-4 h-[100vh]">
-			<div className="bg-white rounded-2xl shadow-2xl w-[50%] p-8">
-				<div className="flex flex-col items-center mb-8">
-					<div className="bg-orange-500 p-4 rounded-full mb-4">
-						<ChefHat className="w-12 h-12 text-white" />
+			<div className="bg-white rounded-2xl shadow-2xl w-[40%] p-8">
+				<div className="w-full flex flex-col">
+					<div>
+						<Link className="w-full flex justify-start" href="/">
+							<ArrowLeft color="black" size={30} />
+						</Link>
 					</div>
-					<h1 className="text-3xl font-bold text-gray-800">Admin Login</h1>
-					<p className="text-gray-600 mt-2">
-						Welcome back! Please login to your account.
-					</p>
+
+					<div className="flex flex-col items-center mb-8">
+						<div className="bg-gary-500 p-4 rounded-full mb-4">
+							<ChefHat className="w-12 h-12 text-black" />
+						</div>
+						<h1 className="text-3xl font-bold text-gray-800">Admin Login</h1>
+						<p className="text-gray-600 mt-2">
+							Welcome back! Please login to your account.
+						</p>
+					</div>
 				</div>
 
 				<form className="space-y-6 w-full">
@@ -26,9 +34,10 @@ const page = () => {
 						<div className="relative">
 							<Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
 							<input
-								className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+								className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg"
 								id="email"
 								onChange={(e) => setEmail(e.target.value)}
+								placeholder="test@gmail.com"
 								required
 								type="email"
 								value={email}
@@ -41,8 +50,9 @@ const page = () => {
 						<div className="relative">
 							<Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
 							<input
-								className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+								className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg"
 								onChange={(e) => setPassword(e.target.value)}
+								placeholder="*********"
 								required
 								type="password"
 								value={password}
@@ -52,7 +62,7 @@ const page = () => {
 
 					<div className="w-full flex justify-center items-center">
 						<Link
-							className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold"
+							className="w-full bg-gray-500 text-white py-3 rounded-lg font-semibold text-center text-xl"
 							href="/admin/dashboard"
 						>
 							Sign In
