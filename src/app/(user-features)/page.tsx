@@ -17,7 +17,7 @@ export default function Home() {
 
 				<Link className="text-center font-bold mt-10" href="/admin">
 					<Button className="text-xl" variant="link">
-						Admin's Log In
+						Memebrs Log In
 					</Button>
 				</Link>
 			</div>

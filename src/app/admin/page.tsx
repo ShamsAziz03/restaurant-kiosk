@@ -1,11 +1,37 @@
 "use client";
 import { ArrowLeft, ChefHat, Lock, Mail } from "lucide-react";
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import type { SubmitEvent } from "react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+
+async function handleSumbit(
+	e: SubmitEvent<HTMLFormElement>,
+	email: string,
+	pass: string,
+	router: AppRouterInstance,
+) {
+	e.preventDefault();
+	const responseOrder = await fetch("http://localhost:3000/api/auth", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ email: email, pass: pass }),
+	});
+
+	const response = await responseOrder.json();
+	if (response.ok) {
+		router.replace("/admin/dashboard");
+	} else {
+		alert("Incorrect Info");
+	}
+}
 
 const page = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const router = useRouter();
 
 	return (
 		<div className="flex items-center justify-center p-4 h-[100vh]">
@@ -28,7 +54,10 @@ const page = () => {
 					</div>
 				</div>
 
-				<form className="space-y-6 w-full">
+				<form
+					className="space-y-6 w-full"
+					onSubmit={(e) => handleSumbit(e, email, password, router)}
+				>
 					<div>
 						<p className="block text-gray-700 mb-2">Email Address</p>
 						<div className="relative">
@@ -61,12 +90,9 @@ const page = () => {
 					</div>
 
 					<div className="w-full flex justify-center items-center">
-						<Link
-							className="w-full bg-gray-500 text-white py-3 rounded-lg font-semibold text-center text-xl"
-							href="/admin/dashboard"
-						>
+						<Button className="w-full bg-gray-500 text-white py-3 rounded-lg font-semibold text-center text-xl">
 							Sign In
-						</Link>
+						</Button>
 					</div>
 				</form>
 			</div>

@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+import bcrypt from "bcryptjs";
 import { PrismaClient } from "../src/generated/prisma";
 
 const adapter = new PrismaMariaDb({
@@ -306,6 +307,12 @@ const extrasItemsData = [
 	},
 ];
 
+async function createPass(password: string) {
+	const salt = await bcrypt.genSalt(10);
+	const hashedPass = await bcrypt.hash(password, salt);
+	return hashedPass;
+}
+
 async function main() {
 	await prisma.categories.createMany({
 		data: categoriesData,
@@ -320,6 +327,26 @@ async function main() {
 	await prisma.extraItems.createMany({
 		data: extrasItemsData,
 		skipDuplicates: true,
+	});
+
+	const hashedPass = await createPass(process.env.PASSWORD ?? "1");
+	await prisma.members.createMany({
+		data: [
+			{
+				fullName: "Ahmad Ali",
+				email: "admin@example.com",
+				passwordHash: hashedPass,
+				phone: "9800000001",
+				role: "admin",
+			},
+			{
+				fullName: "Sami Khaled",
+				email: "kitchen@example.com",
+				passwordHash: hashedPass,
+				phone: "9800000002",
+				role: "kitchenStaff",
+			},
+		],
 	});
 }
 main()

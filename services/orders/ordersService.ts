@@ -12,32 +12,24 @@ export type Order = {
 class OrdersService {
 	async addNewOrder(order: Order) {
 		try {
-			const { id } = await prisma.orders.create({
+			await prisma.orders.create({
 				data: {
 					typeOfOrder: order.typeOfOrder,
 					specialInstructions: order.specialInstructions,
 					orderStatus: "inProgress",
+					orderExtraItems: {
+						create: order.extraItems.map((item) => ({
+							itemId: item.id,
+							quantity: item.qnt,
+						})),
+					},
+					orderItem: {
+						create: order.items.map((item) => ({
+							itemId: item.id,
+							quantity: item.qnt,
+						})),
+					},
 				},
-			});
-
-			//now insert extra items in orderExtra table
-			await prisma.orderExtraItem.createMany({
-				data: order.extraItems.map((item) => ({
-					orderId: id,
-					itemId: item.id,
-					quantity: item.qnt,
-				})),
-				skipDuplicates: true,
-			});
-
-			//now insert  items in order items table
-			await prisma.orderItem.createMany({
-				data: order.items.map((item) => ({
-					orderId: id,
-					itemId: item.id,
-					quantity: item.qnt,
-				})),
-				skipDuplicates: true,
 			});
 
 			return true;
