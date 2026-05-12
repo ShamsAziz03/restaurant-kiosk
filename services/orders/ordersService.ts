@@ -7,6 +7,7 @@ export type Order = {
 	typeOfOrder: typeOfOrder;
 	extraItems: ExtrasItem[];
 	specialInstructions: string;
+	totalPrice: number;
 };
 
 class OrdersService {
@@ -17,13 +18,14 @@ class OrdersService {
 					typeOfOrder: order.typeOfOrder,
 					specialInstructions: order.specialInstructions,
 					orderStatus: "inProgress",
+					totalPrice: order.totalPrice,
 					orderExtraItems: {
 						create: order.extraItems.map((item) => ({
 							itemId: item.id,
 							quantity: item.qnt,
 						})),
 					},
-					orderItem: {
+					orderItems: {
 						create: order.items.map((item) => ({
 							itemId: item.id,
 							quantity: item.qnt,

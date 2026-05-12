@@ -3,16 +3,8 @@ import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
-import type { CartItem } from "@/components/customComponents/cart";
 import { Button } from "@/components/ui/button";
-import type { ExtrasItem, typeOfOrder } from "@/source/cartStore";
-
-export type Order = {
-	items: CartItem[];
-	typeOfOrder: typeOfOrder;
-	extraItems: ExtrasItem[];
-	specialInstructions: string;
-};
+import type { Order } from "../../../../services/orders/ordersService";
 
 async function addOrderToDB(order: Order) {
 	try {
@@ -23,6 +15,7 @@ async function addOrderToDB(order: Order) {
 			typeOfOrder: order.typeOfOrder,
 			extraItems: order.extraItems,
 			specialInstructions: order.specialInstructions,
+			totalPrice: order.totalPrice,
 		};
 		const responseOrder = await fetch("http://localhost:3000/api/orders", {
 			method: "POST",
