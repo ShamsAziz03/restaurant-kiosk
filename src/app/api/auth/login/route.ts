@@ -1,11 +1,11 @@
-import { authService } from "../../../../services/auth/authService";
+import { authService } from "../../../../../services/auth/authService";
 
 export async function POST(request: Request) {
 	// Parse the request body
 	const body = await request.json();
 	const result = await authService.checkUserExist(body.email, body.pass);
 	if (result) {
-		return new Response(JSON.stringify({ ok: true }), {
+		return new Response(JSON.stringify({ ok: true, user: result }), {
 			status: 200,
 			headers: { "Content-Type": "application/json" },
 		});

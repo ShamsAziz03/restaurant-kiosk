@@ -6,15 +6,18 @@ import { useRouter } from "next/navigation";
 import type { SubmitEvent } from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import type { User } from "@/source/loggedUserStore";
+import { useLoggedUserStore } from "@/source/loggedUserStore";
 
 async function handleSumbit(
 	e: SubmitEvent<HTMLFormElement>,
 	email: string,
 	pass: string,
 	router: AppRouterInstance,
+	setLoggedUser: (user: User) => void,
 ) {
 	e.preventDefault();
-	const responseOrder = await fetch("http://localhost:3000/api/auth", {
+	const responseOrder = await fetch("http://localhost:3000/api/auth/login", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ email: email, pass: pass }),
@@ -22,6 +25,13 @@ async function handleSumbit(
 
 	const response = await responseOrder.json();
 	if (response.ok) {
+		const user = {
+			fullName: response.user.fullName,
+			email: response.user.email,
+			phone: response.user.phone,
+			role: response.user.role,
+		};
+		setLoggedUser(user);
 		router.replace("/admin/dashboard");
 	} else {
 		alert("Incorrect Info");
@@ -32,6 +42,7 @@ const page = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const router = useRouter();
+	const setLoggedUser = useLoggedUserStore((state) => state.setLoggedUser);
 
 	return (
 		<div className="flex items-center justify-center p-4 h-[100vh]">
@@ -56,7 +67,9 @@ const page = () => {
 
 				<form
 					className="space-y-6 w-full"
-					onSubmit={(e) => handleSumbit(e, email, password, router)}
+					onSubmit={(e) =>
+						handleSumbit(e, email, password, router, setLoggedUser)
+					}
 				>
 					<div>
 						<p className="block text-gray-700 mb-2">Email Address</p>
