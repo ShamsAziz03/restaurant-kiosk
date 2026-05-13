@@ -1,4 +1,5 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
 import { Clock, DollarSign, ShoppingBag, XCircle } from "lucide-react";
 import {
 	Area,
@@ -16,96 +17,106 @@ import {
 } from "recharts";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
-const revenueData = [
-	{ name: "Jan", revenue: 45000 },
-	{ name: "Feb", revenue: 52000 },
-	{ name: "Mar", revenue: 48000 },
-	{ name: "Apr", revenue: 61000 },
-	{ name: "May", revenue: 75000 },
-	{ name: "Jun", revenue: 82000 },
-	{ name: "Jul", revenue: 68000 },
-	{ name: "Aug", revenue: 73000 },
-	{ name: "Sep", revenue: 69000 },
-	{ name: "Oct", revenue: 81000 },
-	{ name: "Nov", revenue: 92000 },
-	{ name: "Dec", revenue: 105000 },
-];
+export type OrderStructure = {
+	id: number;
+	totalPrice: number;
+	typeOfOrder: "takeAway" | "dineIn";
+	specialInstructions: string | null;
+	orderStatus: "inProgress" | "completed" | "cancelled";
+	createdAt: Date;
+};
+type NumberByMonth = {
+	month: string;
+	value: number;
+};
 
-const ordersData = [
-	{ name: "Jan", orders: 450 },
-	{ name: "Feb", orders: 520 },
-	{ name: "Mar", orders: 480 },
-	{ name: "Apr", orders: 610 },
-	{ name: "May", orders: 750 },
-	{ name: "Jun", orders: 820 },
-	{ name: "Jul", orders: 680 },
-	{ name: "Aug", orders: 730 },
-	{ name: "Sep", orders: 690 },
-	{ name: "Oct", orders: 810 },
-	{ name: "Nov", orders: 920 },
-	{ name: "Dec", orders: 1050 },
-];
+type FullDataObj = {
+	totalOrders: number;
+	ordersRevenue: number;
+	ordersNumberByType: {
+		typeOfOrder: "takeAway" | "dineIn";
+		count: number;
+	}[];
+	ordersNumberByStatus: {
+		status: "inProgress" | "completed" | "cancelled";
+		count: number;
+	}[];
+	recentOrders: OrderStructure[];
+	ordersByMonth: NumberByMonth[];
+	revenueByMonth: NumberByMonth[];
+};
 
-const stats = [
-	{
-		name: "Total Orders",
-		value: "324",
-		icon: ShoppingBag,
-		color: "blue",
-	},
-	{
-		name: "Revenue",
-		value: "15,240",
-		icon: DollarSign,
-		color: "green",
-	},
-	{
-		name: "Canceled Orders",
-		value: "12",
-		icon: XCircle,
-		color: "red",
-	},
-	{
-		name: "Pending Orders",
-		value: "8",
-		icon: Clock,
-		color: "orange",
-	},
-];
+async function fetchData() {
+	const data = await fetch("http://localhost:3000/api/orders/dashboard");
+	const result = await data.json();
+	if (!result.success) {
+		alert(result.msg);
+		return null;
+	}
+	return result.result;
+}
 
-const orders = [
-	{
-		id: "#142",
-		customer: "DineIn",
-		amount: "$45.50",
-		status: "Completed",
-	},
-	{
-		id: "#141",
-		customer: "Takeaway",
-		amount: "$32.00",
-		status: "In Progress",
-	},
-	{
-		id: "#140",
-		customer: "DineIn",
-		amount: "$78.90",
-		status: "Completed",
-	},
-	{
-		id: "#139",
-		customer: "Takeaway",
-		amount: "$21.50",
-		status: "Completed",
-	},
-];
+function calculateStats(dashboardData: FullDataObj) {
+	const canceledOrder =
+		dashboardData?.ordersNumberByStatus?.find(
+			(order) => order.status === "cancelled",
+		)?.count ?? 0;
+	const pendingOrder =
+		dashboardData?.ordersNumberByStatus?.find(
+			(order) => order.status === "inProgress",
+		)?.count ?? 0;
+	const stats = [
+		{
+			name: "Total Orders",
+			value: dashboardData?.totalOrders ?? 0,
+			icon: ShoppingBag,
+			color: "blue",
+		},
+		{
+			name: "Revenue",
+			value: dashboardData?.ordersRevenue ?? 0,
+			icon: DollarSign,
+			color: "green",
+		},
+		{
+			name: "Canceled Orders",
+			value: canceledOrder ?? 0,
+			icon: XCircle,
+			color: "red",
+		},
+		{
+			name: "Pending Orders",
+			value: pendingOrder ?? 0,
+			icon: Clock,
+			color: "orange",
+		},
+	];
+	return stats;
+}
 
-const data = [
-	{ name: "Dine In", value: 400, fill: "#615980" },
-	{ name: "Take Away", value: 300, fill: "#9b8cc8" },
-];
+const orderTypeColors = ["#615980", "#9b8cc8"];
+
+function getOrdersByType(dashboardData: FullDataObj) {
+	const result = dashboardData?.ordersNumberByType.map((order, index) => ({
+		name: order.typeOfOrder,
+		value: order.count,
+		fill: orderTypeColors[index],
+	}));
+	return result;
+}
 
 const DashboardPage = () => {
+	const { data: dashboardData, isLoading } = useQuery({
+		queryKey: ["dataKey"],
+		queryFn: fetchData,
+		// 5 minutes in milliseconds (5 * 60 * 1000)
+		refetchInterval: 300000,
+	});
+
+	const stats = calculateStats(dashboardData);
+	const ordersByType = getOrdersByType(dashboardData);
+
+	if (isLoading) return <h1 className="font-bold text-xl">Loding...</h1>;
 	return (
 		<ScrollArea className="w-[100%] bg-gray-100">
 			<div className="p-16">
@@ -138,13 +149,13 @@ const DashboardPage = () => {
 						Revenue By Month
 					</h2>
 					<ResponsiveContainer height={350} width="100%">
-						<AreaChart data={revenueData}>
+						<AreaChart data={dashboardData?.revenueByMonth ?? []}>
 							<CartesianGrid strokeDasharray="3 3" />
-							<XAxis dataKey="name" />
+							<XAxis dataKey="month" />
 							<YAxis />
 							<Tooltip />
 							<Area
-								dataKey="revenue"
+								dataKey="value"
 								fill="#9b8cc8"
 								fillOpacity={0.3}
 								stroke="#615980"
@@ -160,12 +171,12 @@ const DashboardPage = () => {
 						Orders By Month
 					</h2>
 					<ResponsiveContainer height={350} width="100%">
-						<BarChart data={ordersData}>
+						<BarChart data={dashboardData?.ordersByMonth ?? []}>
 							<CartesianGrid strokeDasharray="3 3" />
-							<XAxis dataKey="name" />
+							<XAxis dataKey="month" />
 							<YAxis />
 							<Tooltip />
-							<Bar dataKey="orders" fill="#615980" radius={[8, 8, 0, 0]} />
+							<Bar dataKey="value" fill="#615980" radius={[8, 8, 0, 0]} />
 						</BarChart>
 					</ResponsiveContainer>
 				</div>
@@ -182,7 +193,7 @@ const DashboardPage = () => {
 								<Pie
 									cx="50%"
 									cy="45%"
-									data={data}
+									data={ordersByType}
 									dataKey="value"
 									innerRadius={60}
 									label={({ value }) => `${value}`}
@@ -201,31 +212,35 @@ const DashboardPage = () => {
 							Recent Orders
 						</h2>
 						<div className="space-y-4">
-							{orders.map((order) => (
+							{dashboardData.recentOrders.map((order: OrderStructure) => (
 								<div
 									className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
 									key={order.id}
 								>
 									<div className="flex items-center gap-4">
 										<div>
-											<p className="font-semibold text-gray-800">{order.id}</p>
-											<p className="text-sm text-gray-600">{order.customer}</p>
+											<p className="font-semibold text-gray-800">
+												# {order.id}
+											</p>
+											<p className="text-sm text-gray-600">
+												{order.typeOfOrder}
+											</p>
 										</div>
 									</div>
 									<div className="text-right">
 										<p className="font-semibold text-gray-800">
-											{order.amount}
+											{order.totalPrice} $
 										</p>
 									</div>
 									<div>
 										<span
 											className={`px-3 py-1 rounded-full text-sm ${
-												order.status === "Completed"
+												order.orderStatus === "completed"
 													? "bg-green-100 text-green-700"
 													: "bg-yellow-100 text-yellow-700"
 											}`}
 										>
-											{order.status}
+											{order.orderStatus}
 										</span>
 									</div>
 								</div>
