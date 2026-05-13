@@ -16,3 +16,20 @@ export async function POST(request: Request) {
 		});
 	}
 }
+
+export async function GET() {
+	const result = await ordersService.getOrders();
+	if (!result)
+		return new Response(
+			JSON.stringify({ success: false, msg: "error in getting info" }),
+			{
+				status: 500,
+				headers: { "Content-Type": "application/json" },
+			},
+		);
+
+	return new Response(JSON.stringify({ success: true, result: result }), {
+		status: 200,
+		headers: { "Content-Type": "application/json" },
+	});
+}

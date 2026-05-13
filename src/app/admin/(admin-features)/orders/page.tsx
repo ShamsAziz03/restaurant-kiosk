@@ -1,4 +1,5 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
 	Pagination,
@@ -7,6 +8,7 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
 	Select,
 	SelectContent,
@@ -24,76 +26,34 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 
-const mockOrders = [
-	{
-		id: "#142",
-		customer: "Table 5",
-		items: "2x Burger, 1x Fries, 2x Coke",
-		amount: "$45.50",
-		status: "Completed",
-		type: "Dine In",
-		date: "2026-05-06 14:30",
-	},
-	{
-		id: "#141",
-		customer: "Takeaway",
-		items: "1x Pizza, 1x Salad",
-		amount: "$32.00",
-		status: "In Progress",
-		type: "Take Away",
+type OrderFullObject = {
+	id: number;
+	typeOfOrder: "takeAway" | "dineIn";
+	specialInstructions: string;
+	orderStatus: "completed" | "inProgress" | "cancelled";
+	createdAt: string;
+	totalPrice: number;
+	orderItems: {
+		orderItemId: number;
+		quantity: number;
+		itemName: string;
+	}[];
+	orderExtraItems: {
+		orderItemId: number;
+		quantity: number;
+		itemName: string;
+	}[];
+};
 
-		date: "2026-05-06 14:25",
-	},
-	{
-		id: "#140",
-		customer: "Table 12",
-		items: "3x Pasta, 2x Wine, 1x Dessert",
-		amount: "$78.90",
-		status: "Completed",
-		type: "Dine In",
-
-		date: "2026-05-06 14:10",
-	},
-	{
-		id: "#139",
-		customer: "Takeaway",
-		items: "2x Sandwich, 2x Juice",
-		amount: "$21.50",
-		status: "Completed",
-		type: "Take Away",
-
-		date: "2026-05-06 13:55",
-	},
-	{
-		id: "#138",
-		customer: "Table 8",
-		items: "1x Steak, 1x Salad, 1x Beer",
-		amount: "$55.00",
-		status: "Pending",
-		type: "Dine In",
-
-		date: "2026-05-06 13:40",
-	},
-	{
-		id: "#137",
-		customer: "Takeaway",
-		items: "4x Burger, 4x Fries",
-		amount: "$68.00",
-		status: "Canceled",
-		type: "Take Away",
-
-		date: "2026-05-06 13:30",
-	},
-	{
-		id: "#136",
-		customer: "Table 3",
-		items: "2x Chicken, 1x Rice, 2x Soda",
-		amount: "$42.00",
-		status: "Completed",
-		type: "Dine In",
-		date: "2026-05-06 13:15",
-	},
-];
+async function fetchData() {
+	const data = await fetch("http://localhost:3000/api/orders");
+	const result = await data.json();
+	if (!result.success) {
+		alert(result.msg);
+		return null;
+	}
+	return result.result;
+}
 
 const OrdersPage = () => {
 	const [statusFilter, setStatusFilter] = useState("all");
@@ -117,8 +77,16 @@ const OrdersPage = () => {
 		}
 	};
 
+	const { data: ordersData, isLoading } = useQuery({
+		queryKey: ["orders"],
+		queryFn: fetchData,
+		refetchInterval: 300000,
+	});
+
+	if (isLoading || !ordersData)
+		return <h1 className="font-bold text-xl">Loading...</h1>;
 	return (
-		<div className="p-8 bg-gray-100 h-[100vh]">
+		<div className="p-8 bg-gray-100 min-h-[100vh]">
 			<div className="mb-8">
 				<h1 className="text-3xl font-bold text-gray-800">Orders Management</h1>
 				<p className="text-gray-600 mt-1">
@@ -141,7 +109,6 @@ const OrdersPage = () => {
 							</SelectTrigger>
 							<SelectContent>
 								<SelectItem value="all">All</SelectItem>
-								<SelectItem value="pending">Pending</SelectItem>
 								<SelectItem value="inProgress">In Progress</SelectItem>
 								<SelectItem value="completed">Completed</SelectItem>
 								<SelectItem value="canceled">Canceled</SelectItem>
@@ -176,12 +143,12 @@ const OrdersPage = () => {
 									Order ID
 								</TableHead>
 								<TableHead className="py-4  text-sm font-semibold text-gray-700">
-									Customer
-								</TableHead>
-								<TableHead className="py-4  text-sm font-semibold text-gray-700">
 									Items
 								</TableHead>
-								<TableHead className="py-4 text-sm font-semibold text-gray-700">
+								<TableHead className="py-4  text-sm font-semibold text-gray-700">
+									Special Instructions
+								</TableHead>
+								<TableHead className="pl-6 py-4 text-sm font-semibold text-gray-700">
 									Type
 								</TableHead>
 								<TableHead className="py-4  text-sm font-semibold text-gray-700">
@@ -196,45 +163,70 @@ const OrdersPage = () => {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{mockOrders.slice(startIndex, endIndex).map((order) => (
-								<TableRow key={order.id}>
-									<TableCell className=" pl-6 py-4 font-semibold text-gray-800">
-										{order.id}
-									</TableCell>
-									<TableCell className="py-4 text-gray-700">
-										{order.customer}
-									</TableCell>
-									<TableCell className="py-4 text-gray-700">
-										{order.items}
-									</TableCell>
-									<TableCell className="py-4">
-										<span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
-											{order.type}
-										</span>
-									</TableCell>
-									<TableCell className="py-4 font-semibold text-gray-800">
-										{order.amount}
-									</TableCell>
-
-									<TableCell className="py-4">
-										<div className="flex items-center gap-2">
-											<span
-												className={`px-3 py-1 rounded-full text-sm ${getStatusColor(order.status)}`}
-											>
-												{order.status}
+							{ordersData
+								?.slice(startIndex, endIndex)
+								.map((order: OrderFullObject) => (
+									<TableRow key={order.id}>
+										<TableCell className="pl-6 font-semibold text-gray-800">
+											{order.id}
+										</TableCell>
+										<TableCell className="text-gray-700 w-[200px]">
+											<ScrollArea className="py-4 h-[70px]">
+												<div className="space-y-1">
+													{order.orderItems.map((item) => (
+														<div className="text-sm" key={item.orderItemId}>
+															{item.quantity}x {item.itemName}
+														</div>
+													))}
+													{order.orderExtraItems.map((item) => (
+														<div
+															className="text-sm text-gray-500"
+															key={item.orderItemId}
+														>
+															+{item.quantity}x {item.itemName}
+														</div>
+													))}
+												</div>
+											</ScrollArea>
+										</TableCell>
+										<TableCell className="pl-6">
+											<span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
+												{order.typeOfOrder === "dineIn"
+													? "Dine In"
+													: "Take Away"}
 											</span>
-										</div>
-									</TableCell>
-
-									<TableCell className="py-4 text-gray-700 text-sm">
-										{order.date}
-									</TableCell>
-								</TableRow>
-							))}
+										</TableCell>
+										<TableCell className="font-semibold text-gray-800">
+											${order.totalPrice.toFixed(2)}
+										</TableCell>
+										<TableCell>
+											<div className="flex items-center gap-2">
+												<span
+													className={`px-3 py-1 rounded-full text-sm ${getStatusColor(order.orderStatus)}`}
+												>
+													{order.orderStatus === "completed"
+														? "Completed"
+														: order.orderStatus === "inProgress"
+															? "In Progress"
+															: "Cancelled"}
+												</span>
+											</div>
+										</TableCell>
+										<TableCell className="text-gray-700 text-sm">
+											{new Date(order.createdAt).toLocaleString([], {
+												year: "numeric",
+												month: "2-digit",
+												day: "2-digit",
+												hour: "2-digit",
+												minute: "2-digit",
+											})}
+										</TableCell>
+									</TableRow>
+								))}
 						</TableBody>
 						<TableFooter>
 							<TableRow>
-								<TableCell className="bg-gray-100" colSpan={7}>
+								<TableCell colSpan={7}>
 									<Pagination>
 										<PaginationContent className="flex items-center justify-center gap-4 w-full py-2">
 											<PaginationItem>
@@ -255,7 +247,7 @@ const OrdersPage = () => {
 											<PaginationItem>
 												<PaginationNext
 													className={`${
-														endIndex >= mockOrders.length
+														endIndex >= ordersData?.length
 															? "pointer-events-none opacity-50"
 															: undefined
 													} p-3 rounded-md text-black font-bold`}

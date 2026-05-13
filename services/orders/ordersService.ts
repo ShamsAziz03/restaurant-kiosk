@@ -185,5 +185,57 @@ class OrdersService {
 		}));
 		return result;
 	}
+
+	async getOrdersWithItems() {
+		try {
+			const orders = await prisma.orders.findMany({
+				include: {
+					orderItems: {
+						select: {
+							id: true,
+							quantity: true,
+							item: {
+								select: { title: true },
+							},
+						},
+					},
+					orderExtraItems: {
+						select: {
+							id: true,
+							quantity: true,
+							extraItem: {
+								select: { title: true },
+							},
+						},
+					},
+				},
+				take: 500,
+				orderBy: {
+					createdAt: "desc",
+				},
+			});
+			return orders;
+		} catch {
+			return null;
+		}
+	}
+
+	async getOrders() {
+		const orders = await this.getOrdersWithItems();
+		const result = orders?.map((order) => ({
+			...order,
+			orderItems: order.orderItems.map((orderItem) => ({
+				orderItemId: orderItem.id,
+				quantity: orderItem.quantity,
+				itemName: orderItem.item.title,
+			})),
+			orderExtraItems: order.orderExtraItems.map((orderItem) => ({
+				orderItemId: orderItem.id,
+				quantity: orderItem.quantity,
+				itemName: orderItem.extraItem.title,
+			})),
+		}));
+		return result;
+	}
 }
 export const ordersService = new OrdersService();

@@ -97,17 +97,18 @@ function calculateStats(dashboardData: FullDataObj) {
 const orderTypeColors = ["#615980", "#9b8cc8"];
 
 function getOrdersByType(dashboardData: FullDataObj) {
-	const result = dashboardData?.ordersNumberByType.map((order, index) => ({
-		name: order.typeOfOrder,
-		value: order.count,
-		fill: orderTypeColors[index],
-	}));
+	const result =
+		dashboardData?.ordersNumberByType.map((order, index) => ({
+			name: order.typeOfOrder,
+			value: order.count,
+			fill: orderTypeColors[index],
+		})) ?? null;
 	return result;
 }
 
 const DashboardPage = () => {
 	const { data: dashboardData, isLoading } = useQuery({
-		queryKey: ["dataKey"],
+		queryKey: ["dashboardData"],
 		queryFn: fetchData,
 		// 5 minutes in milliseconds (5 * 60 * 1000)
 		refetchInterval: 300000,
@@ -116,7 +117,8 @@ const DashboardPage = () => {
 	const stats = calculateStats(dashboardData);
 	const ordersByType = getOrdersByType(dashboardData);
 
-	if (isLoading) return <h1 className="font-bold text-xl">Loding...</h1>;
+	if (isLoading || !dashboardData)
+		return <h1 className="font-bold text-xl">Loading...</h1>;
 	return (
 		<ScrollArea className="w-[100%] bg-gray-100">
 			<div className="p-16">
