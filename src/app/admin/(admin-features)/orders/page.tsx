@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
 	Pagination,
 	PaginationContent,
@@ -83,6 +83,25 @@ const OrdersPage = () => {
 		refetchInterval: 300000,
 	});
 
+	const items = useMemo(() => {
+		if (statusFilter === "all" && typeFilter === "all") return ordersData;
+		else if (statusFilter === "all" && typeFilter !== "all") {
+			//filter on type
+			return ordersData.filter(
+				(order: OrderFullObject) => order.typeOfOrder === typeFilter,
+			);
+		} else if (statusFilter !== "all" && typeFilter === "all") {
+			return ordersData.filter(
+				(order: OrderFullObject) => order.orderStatus === statusFilter,
+			);
+		} else
+			return ordersData.filter(
+				(order: OrderFullObject) =>
+					order.typeOfOrder === typeFilter &&
+					order.orderStatus === statusFilter,
+			);
+	}, [statusFilter, typeFilter, ordersData]);
+
 	if (isLoading || !ordersData)
 		return <h1 className="font-bold text-xl">Loading...</h1>;
 	return (
@@ -163,7 +182,7 @@ const OrdersPage = () => {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{ordersData
+							{items
 								?.slice(startIndex, endIndex)
 								.map((order: OrderFullObject) => (
 									<TableRow key={order.id}>
