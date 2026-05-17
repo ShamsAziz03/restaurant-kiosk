@@ -4,7 +4,7 @@ import CartComponent from "@/components/customComponents/cart";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
-type Categories = {
+export type Categories = {
 	id: number;
 	value: string;
 	icon: string;
