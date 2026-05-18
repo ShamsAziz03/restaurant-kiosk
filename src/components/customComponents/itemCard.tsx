@@ -127,7 +127,7 @@ const ItemCard = (props: Props) => {
 						<DialogContent>
 							<DialogHeader>
 								<DialogTitle>
-									Are you absolutely sure to detele the item?
+									Are you absolutely sure to delete the item?
 								</DialogTitle>
 								<DialogDescription>
 									This action will permanently delete the item.

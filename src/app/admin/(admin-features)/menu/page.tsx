@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import type { FoodItem } from "@/app/(user-features)/categories/page";
 import AddCategoryDialog from "@/components/customComponents/addCategoryDialog";
 import AddItemDialog from "@/components/customComponents/addNewItem";
+import ExtraItemsDialog from "@/components/customComponents/extraItemsDialog";
 import ItemCard from "@/components/customComponents/itemCard";
 import {
 	Pagination,
@@ -46,6 +47,7 @@ const MenuPage = () => {
 	const rowsPerPage = 6;
 	const [startIndex, setStartIndex] = useState(0);
 	const [endIndex, setEndIndex] = useState(rowsPerPage);
+	const [showExtraItemsDialog, setShowExtraItemsDialog] = useState(false);
 
 	const {
 		data: categories,
@@ -101,18 +103,33 @@ const MenuPage = () => {
 							Add, edit, or remove menu items and categories.
 						</p>
 					</div>
-					<button
-						className="flex items-center font-semibold p-3 text-center text-white bg-gray-800 rounded-[10px] shadow-xl hover:bg-gray-400 border-2 hover:shadow-2xl hover:text-black"
-						onClick={() => setShowAddItemDialog(true)}
-						type="button"
-					>
-						<Plus className="w-5 h-5" />
-						Add New Item
-					</button>
+					<div className="flex flex-col gap-2 justify-center items-center">
+						<button
+							className="w-full flex items-center gap-2 font-semibold p-3 text-center text-white bg-gray-800 rounded-[10px] shadow-xl hover:bg-gray-400 border-2 hover:shadow-2xl hover:text-black"
+							onClick={() => setShowExtraItemsDialog(true)}
+							type="button"
+						>
+							<Plus className="w-5 h-5" />
+							Extra Items
+						</button>
+						<button
+							className="w-full flex items-center gap-2 font-semibold p-3 text-center text-white bg-gray-800 rounded-[10px] shadow-xl hover:bg-gray-400 border-2 hover:shadow-2xl hover:text-black"
+							onClick={() => setShowAddItemDialog(true)}
+							type="button"
+						>
+							<Plus className="w-5 h-5" />
+							Add New Item
+						</button>
+					</div>
+
 					<AddItemDialog
 						categories={categories}
 						setShowAddItemDialog={setShowAddItemDialog}
 						showAddItemDialog={showAddItemDialog}
+					/>
+					<ExtraItemsDialog
+						setShowExtraItemsDialog={setShowExtraItemsDialog}
+						showExtraItemsDialog={showExtraItemsDialog}
 					/>
 				</div>
 

@@ -1,4 +1,5 @@
 import type { ItemInfo } from "@/components/customComponents/editItemInfo";
+import type { ExtraItem } from "@/components/customComponents/extrasItemsList";
 import prisma from "@/lib/prisma";
 
 type Data = {
@@ -11,6 +12,8 @@ type Data = {
 	image: string;
 	specifications: string[];
 };
+
+type UserExtraItemData = Pick<Data, "price" | "title" | "image">;
 class ItemsService {
 	async getItemsByCategoryId(categoryId: number) {
 		return await prisma.foodItems.findMany({
@@ -65,6 +68,37 @@ class ItemsService {
 				rating: data.rating,
 				price: data.price,
 				specifications: data.specifications,
+			},
+		});
+	}
+
+	async deleteExtraItem(itemId: number) {
+		return await prisma.extraItems.delete({
+			where: {
+				id: itemId,
+			},
+		});
+	}
+
+	async addNewExtraItem(item: UserExtraItemData) {
+		return await prisma.extraItems.create({
+			data: {
+				title: item.title,
+				image: item.image,
+				price: item.price,
+			},
+		});
+	}
+
+	async updateExtraItem(data: ExtraItem) {
+		return await prisma.extraItems.update({
+			where: {
+				id: data.id,
+			},
+			data: {
+				title: data.title,
+				image: data.image,
+				price: data.price,
 			},
 		});
 	}
