@@ -92,8 +92,8 @@ const MenuPage = () => {
 			</div>
 		);
 	return (
-		<ScrollArea className="w-[100%]">
-			<div className="p-8">
+		<ScrollArea className="w-[100%] bg-gray-100">
+			<div className="p-6">
 				<div className="mb-8 flex items-center justify-between">
 					<div>
 						<h1 className="text-3xl font-bold text-gray-800">

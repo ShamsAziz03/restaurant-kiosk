@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import type { Roles } from "@/app/admin/(admin-features)/employees/page";
 import prisma from "@/lib/prisma";
 
 type Admin = {
@@ -6,6 +7,7 @@ type Admin = {
 	email: string;
 	password: string;
 	phone: string;
+	role: Roles;
 };
 class AuthService {
 	async checkUserExist(email: string, pass: string) {
@@ -26,7 +28,7 @@ class AuthService {
 		return hashedPass;
 	}
 
-	async addNewAdmin(body: Admin) {
+	async addNewMember(body: Admin) {
 		try {
 			//check if email used
 			const user = await prisma.members.findUnique({
@@ -45,7 +47,7 @@ class AuthService {
 					fullName: body.fullName,
 					passwordHash: hashedPass,
 					phone: body.phone,
-					role: "admin",
+					role: body.role,
 				},
 			});
 

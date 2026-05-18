@@ -25,7 +25,7 @@ type Props = {
 	setShowAddCategoryDialog: Dispatch<SetStateAction<boolean>>;
 };
 
-type FormData = {
+export type FormData = {
 	value: string;
 	icon: string;
 	alt: string;

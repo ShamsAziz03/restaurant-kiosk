@@ -6,7 +6,6 @@ import {
 	LogOut,
 	Menu,
 	Pencil,
-	PlusCircle,
 	ShoppingBag,
 	Users,
 } from "lucide-react";
@@ -21,7 +20,6 @@ const navigation = [
 	{ name: "Orders", href: "/admin/orders", icon: ShoppingBag },
 	{ name: "Menu", href: "/admin/menu", icon: Menu },
 	{ name: "Employees", href: "/admin/employees", icon: Users },
-	{ name: "Add New Admin", href: "/admin/newAdmin", icon: PlusCircle },
 	{ name: "Edit Profile", href: "/admin/editProfile", icon: Pencil },
 ];
 
