@@ -33,7 +33,8 @@ async function handleSumbit(
 			role: response.user.role,
 		};
 		setLoggedUser(user);
-		router.replace("/admin/dashboard");
+		if (user.role === "admin") router.replace("/admin/dashboard");
+		else router.replace("/kitchen-staff-features/orders");
 	} else {
 		alert("Incorrect Info");
 	}

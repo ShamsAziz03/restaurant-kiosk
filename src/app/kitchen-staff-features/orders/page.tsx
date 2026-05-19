@@ -1,6 +1,9 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
+import { Edit2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { EditOrderStatusDialog } from "@/components/customComponents/updateOrderStatusDialog";
+import { Button } from "@/components/ui/button";
 import {
 	Pagination,
 	PaginationContent,
@@ -26,7 +29,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 
-type OrderFullObject = {
+export type OrderFullObject = {
 	id: number;
 	typeOfOrder: "takeAway" | "dineIn";
 	specialInstructions: string;
@@ -61,6 +64,9 @@ const OrdersPage = () => {
 	const rowsPerPage = 5;
 	const [startIndex, setStartIndex] = useState(0);
 	const [endIndex, setEndIndex] = useState(rowsPerPage);
+	const [selectedOrder, setSelectedOrder] = useState<null | OrderFullObject>(
+		null,
+	);
 
 	const getStatusColor = (status: string) => {
 		switch (status) {
@@ -76,7 +82,7 @@ const OrdersPage = () => {
 	};
 
 	const { data: ordersData, isLoading } = useQuery({
-		queryKey: ["orders"],
+		queryKey: ["ordersStaff"],
 		queryFn: fetchData,
 		refetchInterval: 300000,
 	});
@@ -102,6 +108,7 @@ const OrdersPage = () => {
 
 	if (isLoading || !ordersData)
 		return <h1 className="font-bold text-xl">Loading...</h1>;
+
 	return (
 		<div className="p-8 bg-gray-100 min-h-[100vh]">
 			<div className="mb-8">
@@ -232,6 +239,14 @@ const OrdersPage = () => {
 															? "In Progress"
 															: "Cancelled"}
 												</span>
+												<Button
+													aria-label={`Edit ${order.orderStatus}`}
+													className="rounded-xl bg-gray-300"
+													onClick={() => setSelectedOrder(order)}
+													type="button"
+												>
+													<Edit2 className="text-black" />
+												</Button>
 											</div>
 										</TableCell>
 										<TableCell className="text-gray-700 text-sm">
@@ -288,6 +303,13 @@ const OrdersPage = () => {
 					</Table>
 				</div>
 			</div>
+			{selectedOrder && (
+				<EditOrderStatusDialog
+					activeOrder={selectedOrder}
+					key={selectedOrder?.id}
+					setActiveOrder={setSelectedOrder}
+				/>
+			)}
 		</div>
 	);
 };

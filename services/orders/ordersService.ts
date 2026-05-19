@@ -237,5 +237,18 @@ class OrdersService {
 		}));
 		return result;
 	}
+
+	async updateOrderStatus(
+		orderId: number,
+		status: "inProgress" | "completed" | "cancelled",
+	) {
+		const newOrder = await prisma.orders.update({
+			where: { id: orderId },
+			data: { orderStatus: status },
+		});
+		if (!newOrder)
+			return { success: false, msg: "Error in updating order status" };
+		return { success: true, msg: "Update order status success!" };
+	}
 }
 export const ordersService = new OrdersService();
