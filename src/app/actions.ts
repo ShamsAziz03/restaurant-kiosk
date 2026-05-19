@@ -2,17 +2,9 @@
 
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
-import type { CartItem } from "@/components/customComponents/cart";
-import type { ExtrasItem, typeOfOrder } from "@/source/cartStore";
+import type { Order } from "../../services/orders/ordersService";
 
-type OrderDetails = {
-	items: CartItem[];
-	typeOfOrder: typeOfOrder;
-	extraItems: ExtrasItem[];
-	specialInstructions: string;
-};
-
-export async function createCheckoutSession(orderDetails: OrderDetails) {
+export async function createCheckoutSession(orderDetails: Order) {
 	if (!process.env.STRIPE_SECRET_KEY) {
 		throw new Error("Missing Stripe secret key");
 	}

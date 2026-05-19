@@ -48,7 +48,9 @@ const PaymentPage = () => {
 
 					{/* This form triggers the Stripe Redirect */}
 					<form
-						action={() => createCheckoutSession(orderDetails)}
+						action={() =>
+							createCheckoutSession({ ...orderDetails, totalPrice: finalTotal })
+						}
 						className="w-full"
 					>
 						<Button className="w-full" type="submit">

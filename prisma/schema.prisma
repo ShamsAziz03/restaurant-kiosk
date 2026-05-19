@@ -19,6 +19,11 @@ enum OrderStatus {
   cancelled
 }
 
+enum memberRole {
+  admin
+  kitchenStaff
+}
+
 model FoodItems {
   id             Int         @id @default(autoincrement())
   categoryId     Int //foreign key
@@ -56,6 +61,7 @@ model Orders {
   specialInstructions String?
   orderStatus         OrderStatus
   createdAt           DateTime    @default(now())
+  totalPrice          Float       @default(0.0)
 
   orderItems      orderItem[]
   orderExtraItems orderExtraItem[]
@@ -77,4 +83,14 @@ model orderExtraItem {
   quantity  Int        @default(1)
   order     Orders     @relation(fields: [orderId], references: [id])
   extraItem ExtraItems @relation(fields: [itemId], references: [id])
+}
+
+model members {
+  memberId     Int        @id @default(autoincrement())
+  fullName     String
+  email        String     @unique
+  passwordHash String
+  phone        String?
+  role         memberRole @default(kitchenStaff)
+  createdAt    DateTime   @default(now())
 }

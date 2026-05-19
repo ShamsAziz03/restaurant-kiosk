@@ -1,17 +1,16 @@
-import { categoriesService } from "../../../../services/categories/categoriesService";
+import { employeesService } from "../../../../services/employees/employeesService";
 
 export async function GET() {
-	const result = await categoriesService.getAllCategories();
+	const result = await employeesService.getAllEmployees();
 	return new Response(JSON.stringify(result), {
 		status: 200,
 		headers: { "Content-Type": "application/json" },
 	});
 }
 
-export async function POST(request: Request) {
-	// Parse the request body
+export async function DELETE(request: Request) {
 	const body = await request.json();
-	const result = await categoriesService.addNewItem(body);
+	const result = await employeesService.deleteEmployee(body.id);
 	if (result) {
 		return new Response(JSON.stringify({ success: true }), {
 			status: 201,
