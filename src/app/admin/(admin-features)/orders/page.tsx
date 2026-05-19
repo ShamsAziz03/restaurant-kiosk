@@ -210,6 +210,11 @@ const OrdersPage = () => {
 										</TableCell>
 										<TableCell className="pl-6">
 											<span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
+												{order.specialInstructions}
+											</span>
+										</TableCell>
+										<TableCell className="pl-6">
+											<span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
 												{order.typeOfOrder === "dineIn"
 													? "Dine In"
 													: "Take Away"}

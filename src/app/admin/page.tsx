@@ -26,6 +26,7 @@ async function handleSumbit(
 	const response = await responseOrder.json();
 	if (response.ok) {
 		const user = {
+			memberId: response.user.memberId,
 			fullName: response.user.fullName,
 			email: response.user.email,
 			phone: response.user.phone,

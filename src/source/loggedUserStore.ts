@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 export type User = {
+	memberId: number;
 	fullName: string;
 	email: string;
 	phone: string;
@@ -15,6 +16,7 @@ type StoreProps = {
 
 export const useLoggedUserStore = create<StoreProps>((set) => ({
 	loggedUser: {
+		memberId: 1,
 		fullName: "",
 		email: "",
 		phone: "",
@@ -24,6 +26,7 @@ export const useLoggedUserStore = create<StoreProps>((set) => ({
 	setLoggedUser: (user) => {
 		set(() => ({
 			loggedUser: {
+				memberId: user.memberId,
 				email: user.email,
 				fullName: user.fullName,
 				phone: user.phone,
@@ -34,6 +37,7 @@ export const useLoggedUserStore = create<StoreProps>((set) => ({
 	removeLoggedUser: () => {
 		set(() => ({
 			loggedUser: {
+				memberId: 1,
 				email: "",
 				fullName: "",
 				phone: "",
