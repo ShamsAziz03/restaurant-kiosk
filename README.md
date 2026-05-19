@@ -18,6 +18,8 @@ A multi-role restaurant management and ordering platform with separate applicati
 ![Husky](https://img.shields.io/badge/Husky-000000?style=for-the-badge&logo=husky&logoColor=white)
 ![Biome](https://img.shields.io/badge/Biome-60A5FA?style=for-the-badge&logo=biome&logoColor=white)
 ![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white)
+![bcrypt](https://img.shields.io/badge/bcrypt-323330?style=for-the-badge&logoColor=white)
+![Fuse.js](https://img.shields.io/badge/Fuse.js-000000?style=for-the-badge&logoColor=white)
 ---
  
 ## 🎯 System Roles
@@ -31,25 +33,30 @@ A multi-role restaurant management and ordering platform with separate applicati
 - Checkout with card using Stripe Payment.
  
 ### 👨‍🍳 Kitchen Staff App
-- View live incoming orders instantly
 - See order details, items, modifiers, and notes
-- Mark orders as done
+- Change status of orders like complete
 - Undo completed orders if needed
-- Chat with admin for ingredient issues or replacements
+- edit their informations
  
 ### ⚙️ Admin App
-- Manage menu (CRUD): categories, products, prices, modifiers
-- Track all orders and filter by status, date, payment
+- Manage menu (CRUD): categories, products, prices, extra items, with fuzzy search
+- Track all orders and filter by status, type
 - View customer complaints and communicate directly
-- Monitor ratings and reviews from customers
-- Manage kitchen staff and their details
-- Chat with kitchen staff for coordination
-- Create and manage promotional offers with date ranges
-- View business analytics: sales by day/month, best/worst selling items, cancel rate, revenue
+- Manage kitchen staff and other admins and add new ones or delete.
+- View business analytics: sales by month, cancel and pending orders number, revenue
  
 ---
 
-## ⚙️ Setup & Installation
+# ⚙️ Setup & Installation
+ 
+## Prerequisites
+ 
+Before you begin, ensure you have the following installed on your system:
+- **Node.js** (v16 or higher)
+- **npm** (comes with Node.js)
+- **MySQL** (v8.0 or higher)
+- **Git**
+## Step 1: Clone the Repository
  
 ```bash
 # Clone the repository
@@ -57,12 +64,101 @@ git clone https://github.com/ShamsAziz03/restaurant-kiosk.git
  
 # Navigate into the project
 cd restaurant-kiosk
+```
  
-# Install dependencies
+## Step 2: Create Database & Environment Configuration
+ 
+### Create MySQL Database
+ 
+First, create a MySQL database for your project:
+ 
+```bash
+# Login to MySQL
+mysql -u root -p
+ 
+# In MySQL console, create a new database
+CREATE DATABASE restaurant_kiosk;
+ 
+# Exit MySQL
+EXIT;
+```
+ 
+### Configure Environment Variables
+ 
+Create a `.env.local` file in the root directory of your project and add the following configuration:
+ 
+```bash
+# Database Configuration
+DATABASE_URL="mysql://root:your_password@localhost:3306/restaurant_kiosk"
+DB_HOST="localhost"
+DB_USER="root"
+DB_PASSWORD="your_password"
+DB_PORT="3306"
+DB_NAME="restaurant_kiosk"
+ 
+# Stripe Configuration
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="your_stripe_publishable_key"
+STRIPE_SECRET_KEY="your_stripe_secret_key"
+ 
+# Application Password
+PASSWORD="your_secure_password"
+```
+ 
+### Update Placeholders
+ 
+Replace the following values with your actual credentials:
+- `your_password` - Your MySQL root password
+- `restaurant_kiosk` - Your desired database name
+- `your_stripe_publishable_key` - Your Stripe publishable key (get from Stripe dashboard)
+- `your_stripe_secret_key` - Your Stripe secret key (get from Stripe dashboard)
+- `your_secure_password` - A secure password for your application
+## Step 3: Set Up Stripe Account
+ 
+1. Go to [Stripe Dashboard](https://dashboard.stripe.com/)
+2. Create a new Stripe account or log in to an existing one
+3. Navigate to the **API keys** section in your account settings
+4. Copy your:
+   - **Publishable Key** (starts with `pk_`)
+   - **Secret Key** (starts with `sk_`)
+5. Add these keys to your `.env.local` file (as shown in Step 2)
+## Step 4: Install Dependencies
+ 
+```bash
 npm install
+```
  
-# Start development server
+## Step 5: Initialize Prisma & Database
+ 
+### Generate Prisma Client
+ 
+```bash
+npx prisma generate
+```
+ 
+### Run Database Migrations
+ 
+```bash
+npx prisma migrate dev
+```
+ 
+This command will:
+- Create all necessary database tables
+- Set up the schema based on your Prisma schema file
+- Generate the Prisma client
+### Seed the Database (Optional)
+ 
+If you have seed data configured:
+ 
+```bash
+npx prisma db seed
+```
+ 
+This will populate your database with initial data.
+ 
+## Step 6: Start the Development Server
+ 
+```bash
 npm run dev
 ```
  
-Visit `http://localhost:3000` in your browser.
+The application will start on `http://localhost:3000`
