@@ -2,7 +2,7 @@
  
 A multi-role restaurant management and ordering platform with separate applications for customers, kitchen staff, and administrators.
 
- ### Full Demo Link: https://drive.google.com/file/d/1qAZCfQEVfU0LP2d8gHI-cT_YgoePx8Rz/view?usp=sharing
+ ### Full Demo Link: https://drive.google.com/file/d/1p1n7Q0P91VsuVijnXAZqP6vBmG4Qs5wo/view?usp=sharing
 ---
 ## Final Project — Asal Training | Computer Engineering
 #### This is my final project developed during my training at **Asal Technologies**, in Frontend Development.
